@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>국민대 로컬맵 서비스</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #f8f9fa; }
+    h1 { text-align: center; color: #2c3e50; }
+    .menu { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+    .menu button { padding: 1rem 2rem; font-size: 1rem; border: none; background: #3498db; color: white; border-radius: 8px; cursor: pointer; }
+    .menu button:hover { background: #2980b9; }
+    .section { margin-top: 2rem; display: none; text-align: center; }
+    select, input, textarea { padding: 0.5rem; width: 100%; max-width: 300px; margin-top: 0.5rem; margin-bottom: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    .community-list { background: white; padding: 1rem; border-radius: 8px; margin-top: 1rem; text-align: left; }
+    .community-item { border-bottom: 1px solid #ccc; padding: 0.5rem 0; }
+    img { max-width: 90%; margin-top: 20px; border-radius: 10px; }
+  </style>
+</head>
+<body>
+  <h1>국민대 로컬맵 서비스</h1>
+
+  <div class="menu">
+    <button onclick="showSection('buildingMove')">건물 간 이동</button>
+    <button onclick="showSection('indoorMove')">건물 내 이동</button>
+    <button onclick="showSection('facilityInfo')">시설/행사 안내</button>
+    <button onclick="showSection('community')">커뮤니티 공간</button>
+  </div>
+
+  <div id="buildingMove" class="section">
+    <h2>건물 간 이동</h2>
+    <div class="form-group">
+      <label>출발 건물</label>
+      <select id="buildingStart">
+        <option>공학관</option><option>예술관</option><option>도서관</option><option>복지관</option><option>북악관</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>도착 건물</label>
+      <select id="buildingEnd">
+        <option>공학관</option><option>예술관</option><option>도서관</option><option>복지관</option><option>북악관</option>
+      </select>
+    </div>
+    <button onclick="showBuildingRoute()">경로 보기</button>
+    <button onclick="showARMode()">AR 모드</button>
+    <div id="buildingRouteImage"></div>
+  </div>
+
+  <div id="indoorMove" class="section">
+    <h2>건물 내 이동</h2>
+    <div class="form-group">
+      <label>건물 선택</label>
+      <select id="indoorBuilding">
+        <option>공학관</option><option>복지관</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>출발 교실</label>
+      <input type="text" placeholder="예: 301호">
+    </div>
+    <div class="form-group">
+      <label>도착 교실</label>
+      <input type="text" placeholder="예: 510호">
+    </div>
+    <button onclick="showIndoorRoute()">경로 보기</button>
+    <button onclick="showARMode()">AR 모드</button>
+    <div id="indoorRouteImage"></div>
+  </div>
+
+  <div id="facilityInfo" class="section">
+    <h2>🎪 시설/행사 안내</h2>
+    <p>아래 탭을 선택해 정보를 확인하세요.</p>
+    <div class="form-group">
+      <select onchange="showFacilityContent(this.value)">
+        <option value="">-- 선택 --</option>
+        <option value="show">공연</option>
+        <option value="exhibit">전시</option>
+        <option value="event">이벤트</option>
+      </select>
+    </div>
+    <div id="facilityContent"></div>
+  </div>
+
+  <div id="community" class="section">
+    <h2>📌 재학생 커뮤니티 공간</h2>
+    <p>추천 장소나 코스를 입력하고 다른 학생들과 공유해보세요!</p>
+    <div class="form-group">
+      <label>장소/코스 이름</label>
+      <input type="text" id="spotName">
+    </div>
+    <div class="form-group">
+      <label>설명</label>
+      <textarea id="spotDesc"></textarea>
+    </div>
+    <button onclick="addSpot()">추천 등록하기</button>
+    <div class="community-list" id="spotList">
+      <div class="community-item">
+        <strong>복지관 라운지 → 북악관 벚꽃길 코스</strong>
+        <p>시험 끝나고 가볍게 산책하기 좋아요. 사진 찍기에도 굿!</p>
+      </div>
+      <div class="community-item">
+        <strong>도서관 옥상</strong>
+        <p>조용한 분위기에서 햇살 받으며 공부하거나 쉬기 좋은 공간입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function addSpot() {
+      const name = document.getElementById('spotName').value;
+      const desc = document.getElementById('spotDesc').value;
+      if (name && desc) {
+        const list = document.getElementById('spotList');
+        const item = document.createElement('div');
+        item.className = 'community-item';
+        item.innerHTML = `<strong>${name}</strong><p>${desc}</p>`;
+        list.prepend(item);
+        document.getElementById('spotName').value = '';
+        document.getElementById('spotDesc').value = '';
+      }
+    }
+
+    function showBuildingRoute() {
+      document.getElementById('buildingRouteImage').innerHTML = `<img src="images/slide2.JPG" alt="건물 간 경로">`;
+    }
+
+    function showIndoorRoute() {
+      document.getElementById('indoorRouteImage').innerHTML = `<img src="images/slide3.JPG" alt="건물 내 경로">`;
+    }
+
+    function showARMode() {
+      alert("AR 모드는 단순 이미지로 제공됩니다. 추후 실시간 위치 연동 예정.");
+      window.open("images/slide4.JPG", "_blank");
+    }
+
+    function showFacilityContent(type) {
+      const content = {
+        show: "🎤 <strong>공연 안내:</strong> 대운동장 야외무대에서 6월 5일 오후 6시부터 힙합 공연이 열립니다.",
+        exhibit: "🖼️ <strong>전시 안내:</strong> 예술관 3층 갤러리에서 디자인학부 졸업 전시가 진행 중입니다.",
+        event: "🎈 <strong>이벤트 안내:</strong> 복지관 앞 광장에서 플리마켓이 열립니다! 먹거리와 굿즈가 가득!"
+      };
+      document.getElementById('facilityContent').innerHTML = `<div style="background:white;padding:1rem;border-radius:8px;">${content[type] || ''}</div>`;
+    }
+  </script>
+</body>
+</html>
