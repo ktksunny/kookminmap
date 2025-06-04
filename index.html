@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>국민대 캠퍼스 길안내</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #f8f9fa; }
+    h1 { text-align: center; color: #2c3e50; }
+    .menu { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; }
+    .menu button { padding: 1rem 2rem; font-size: 1rem; border: none; background: #3498db; color: white; border-radius: 8px; cursor: pointer; }
+    .menu button:hover { background: #2980b9; }
+    .section { margin-top: 2rem; display: none; }
+    select, input, textarea { padding: 0.5rem; width: 100%; margin-top: 0.5rem; margin-bottom: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    .community-list { background: white; padding: 1rem; border-radius: 8px; margin-top: 1rem; }
+    .community-item { border-bottom: 1px solid #ccc; padding: 0.5rem 0; }
+  </style>
+</head>
+<body>
+  <h1>국민대 캠퍼스 길안내</h1>
+
+  <div class="menu">
+    <button onclick="showSection('buildingMove')">건물 간 이동</button>
+    <button onclick="showSection('indoorMove')">건물 내 이동</button>
+    <button onclick="showSection('community')">커뮤니티</button>
+  </div>
+
+  <div id="buildingMove" class="section">
+    <h2>건물 간 이동</h2>
+    <div class="form-group">
+      <label>출발 건물</label>
+      <select><option>공학관</option><option>예술관</option><option>도서관</option></select>
+    </div>
+    <div class="form-group">
+      <label>도착 건물</label>
+      <select><option>공학관</option><option>예술관</option><option>도서관</option></select>
+    </div>
+    <button>경로 보기</button>
+  </div>
+
+  <div id="indoorMove" class="section">
+    <h2>건물 내 이동</h2>
+    <div class="form-group">
+      <label>건물 선택</label>
+      <select><option>공학관</option></select>
+    </div>
+    <div class="form-group">
+      <label>출발 교실</label>
+      <input type="text" placeholder="예: 301호">
+    </div>
+    <div class="form-group">
+      <label>도착 교실</label>
+      <input type="text" placeholder="예: 510호">
+    </div>
+    <button>경로 보기</button>
+  </div>
+
+  <div id="community" class="section">
+    <h2>커뮤니티 추천 명소</h2>
+    <div class="form-group">
+      <label>명소 이름</label>
+      <input type="text" id="spotName">
+    </div>
+    <div class="form-group">
+      <label>설명</label>
+      <textarea id="spotDesc"></textarea>
+    </div>
+    <button onclick="addSpot()">명소 추천하기</button>
+
+    <div class="community-list" id="spotList"></div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function addSpot() {
+      const name = document.getElementById('spotName').value;
+      const desc = document.getElementById('spotDesc').value;
+      if (name && desc) {
+        const list = document.getElementById('spotList');
+        const item = document.createElement('div');
+        item.className = 'community-item';
+        item.innerHTML = `<strong>${name}</strong><p>${desc}</p>`;
+        list.prepend(item);
+        document.getElementById('spotName').value = '';
+        document.getElementById('spotDesc').value = '';
+      }
+    }
+  </script>
+</body>
+</html>
