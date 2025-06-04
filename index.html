@@ -13,8 +13,17 @@
     .section { margin-top: 2rem; display: none; text-align: center; }
     select, input, textarea { padding: 0.5rem; width: 100%; max-width: 300px; margin-top: 0.5rem; margin-bottom: 1rem; }
     .form-group { margin-bottom: 1rem; }
-    .community-list { background: white; padding: 1rem; border-radius: 8px; margin-top: 1rem; text-align: left; }
-    .community-item { border-bottom: 1px solid #ccc; padding: 0.5rem 0; }
+    .community-list { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1rem; }
+    .community-item {
+      background: #fff8b5;
+      border-left: 8px solid #f39c12;
+      padding: 1rem;
+      width: 200px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      text-align: left;
+    }
     img { max-width: 90%; margin-top: 20px; border-radius: 10px; }
   </style>
 </head>
@@ -135,8 +144,8 @@
     }
 
     function showARMode() {
-      alert("AR 모드는 단순 이미지로 제공됩니다. 추후 실시간 위치 연동 예정.");
-      window.open("images/slide4.JPG", "_blank");
+      alert("AR 모드는 이미지 기반으로 제공됩니다.");
+      window.open("images/slide4.jpg", "_blank");
     }
 
     function showFacilityContent(type) {
