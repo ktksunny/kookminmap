@@ -36,6 +36,18 @@
       cursor: pointer;
     }
     .menu-vertical button:hover { background: #444; }
+    .section { margin-top: 2rem; display: none; text-align: center; width: 100%; }
+    .form-group { margin-bottom: 1rem; }
+    .community-list { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1rem; }
+    .community-item {
+      background: #fff8b5;
+      border-left: 8px solid #f39c12;
+      padding: 1rem;
+      width: 200px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      text-align: left;
+    }
   </style>
 </head>
 <body>
@@ -47,19 +59,50 @@
     </div>
     <div class="menu-vertical">
       <button onclick="showSection('buildingMove')">건물 찾기</button>
-      <button onclick="showSection('indoorMove')">강의실 / 시설 찾기</button>
+      <button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
       <button onclick="showSection('community')">커뮤니티</button>
     </div>
   </div>
 
   <div id="buildingMove" class="section">
-    <!-- 건물 간 이동 섹션 내용 -->
+    <h2>건물 간 이동</h2>
+    <p>출발 건물과 도착 건물을 선택하세요.</p>
+    <div class="form-group">
+      <select><option>공학관</option><option>예술관</option><option>복지관</option></select>
+      <select><option>북악관</option><option>도서관</option><option>미술관</option></select>
+    </div>
+    <img src="images/slide2.JPG" alt="건물 간 경로" style="max-width:90%; margin-top:1rem;">
   </div>
-  <div id="indoorMove" class="section">
-    <!-- 건물 내 이동 섹션 내용 -->
+
+  <div id="facilityInfo" class="section">
+    <h2>강의실 / 시설 찾기</h2>
+    <p>실내에서 강의실이나 시설을 찾아보세요.</p>
+    <img src="images/slide3.JPG" alt="건물 내 경로" style="max-width:90%; margin-top:1rem;">
   </div>
+
   <div id="community" class="section">
-    <!-- 커뮤니티 섹션 내용 -->
+    <h2>📌 재학생 커뮤니티 공간</h2>
+    <p>추천 장소나 코스를 입력하고 다른 학생들과 공유해보세요!</p>
+    <div class="form-group">
+      <input type="text" id="spotName" placeholder="장소/코스 이름">
+      <textarea id="spotDesc" placeholder="설명"></textarea>
+      <button onclick="addSpot()">추천 등록하기</button>
+    </div>
+    <div class="community-list" id="spotList">
+      <div class="community-item">
+        <strong>복지관 라운지 → 북악관 벚꽃길 코스</strong>
+        <p>시험 끝나고 가볍게 산책하기 좋아요. 사진 찍기에도 굿!</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 3rem;">🎪 시설/행사 안내</h3>
+    <select onchange="showFacilityContent(this.value)">
+      <option value="">-- 선택 --</option>
+      <option value="show">공연</option>
+      <option value="exhibit">전시</option>
+      <option value="event">이벤트</option>
+    </select>
+    <div id="facilityContent" style="margin-top: 1rem;"></div>
   </div>
 
   <script>
@@ -67,6 +110,29 @@
       document.querySelector('.home-interface').style.display = 'none';
       document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
       document.getElementById(id).style.display = 'block';
+    }
+
+    function addSpot() {
+      const name = document.getElementById('spotName').value;
+      const desc = document.getElementById('spotDesc').value;
+      if (name && desc) {
+        const list = document.getElementById('spotList');
+        const item = document.createElement('div');
+        item.className = 'community-item';
+        item.innerHTML = `<strong>${name}</strong><p>${desc}</p>`;
+        list.prepend(item);
+        document.getElementById('spotName').value = '';
+        document.getElementById('spotDesc').value = '';
+      }
+    }
+
+    function showFacilityContent(type) {
+      const content = {
+        show: "🎤 <strong>공연 안내:</strong> 대운동장 야외무대에서 6월 5일 오후 6시부터 힙합 공연이 열립니다.",
+        exhibit: "🖼️ <strong>전시 안내:</strong> 예술관 3층 갤러리에서 디자인학부 졸업 전시가 진행 중입니다.",
+        event: "🎈 <strong>이벤트 안내:</strong> 복지관 앞 광장에서 플리마켓이 열립니다! 먹거리와 굿즈가 가득!"
+      };
+      document.getElementById('facilityContent').innerHTML = `<div style="background:white;padding:1rem;border-radius:8px;">${content[type] || ''}</div>`;
     }
   </script>
 </body>
