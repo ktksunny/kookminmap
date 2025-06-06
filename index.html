@@ -7,69 +7,38 @@
   <style>
     body { font-family: sans-serif; background: #f0f4f8; margin: 0; text-align: center; }
     .home-interface {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-top: 3rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 3rem;
     }
-    .icon-row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
+    .icon-row { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-bottom: 2rem; }
     .icon-row img { width: 60px; height: auto; border-radius: 10px; }
     .main-logo { width: 100px; margin-bottom: 2rem; }
     .menu-vertical button {
-      display: block;
-      width: 200px;
-      margin: 0.5rem 0;
-      padding: 1rem;
-      font-size: 1rem;
-      border: none;
-      background: black;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
+      display: block; width: 200px; margin: 0.5rem 0; padding: 1rem;
+      font-size: 1rem; border: none; background: black; color: white; border-radius: 6px; cursor: pointer;
     }
-    .menu-vertical button:hover { background: #444; }
     .section { display: none; margin-top: 2rem; }
+    .back-btn {
+      position: absolute; top: 10px; left: 10px;
+      background: #fff; border: 1px solid #aaa;
+      padding: 0.4rem 1rem; border-radius: 20px;
+      cursor: pointer; z-index: 1000;
+    }
     .map-container { position: relative; text-align: center; }
-    .destination-label { font-weight: bold; margin: 1rem 0 0.5rem; font-size: 1.1rem; }
+    .destination-label { font-weight: bold; margin-top: 1rem; font-size: 1.1rem; }
     .destination-input {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      background: white;
-      border-radius: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.4rem 1rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative; margin-top: 0.5rem;
+      width: 80%; max-width: 300px; margin-left: auto; margin-right: auto;
+      display: flex; justify-content: center; align-items: center;
+      background: white; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 0.5rem 1rem;
     }
     .destination-input input,
     .destination-input select {
-      border: none;
-      outline: none;
-      width: 90%;
-      font-size: 1rem;
+      border: none; outline: none; width: 100%; font-size: 1rem;
     }
-    .back-btn {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: #fff;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
+    .checkboxes { display: flex; flex-direction: column; align-items: flex-start; padding: 1rem; }
+    .checkboxes label { margin: 0.5rem 0; }
+    .zoom-btn { margin-top: 1rem; padding: 0.6rem 1.2rem; background: #333; color: white; border: none; border-radius: 8px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -83,6 +52,7 @@
       <button onclick="showSection('buildingMove')">건물 찾기</button>
       <button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
       <button onclick="showSection('community')">커뮤니티</button>
+      <button onclick="showSection('usageMap')">시설 이용량 보기</button>
     </div>
   </div>
 
@@ -93,7 +63,8 @@
       <div class="destination-input">
         <select><option>학생식당</option><option>북악관</option><option>복지관</option></select>
       </div>
-      <img src="images/slide2.JPG" alt="건물 간 이동 경로" style="width: 90%; border-radius: 10px; margin-top: 4rem;">
+      <img src="images/slide2.JPG" alt="건물 간 경로" style="width: 90%; border-radius: 10px; margin-top: 2rem;">
+      <button class="zoom-btn" onclick="window.open('ar.html')">AR 모드 보기</button>
     </div>
   </div>
 
@@ -104,69 +75,64 @@
       <div class="destination-input">
         <input type="text" placeholder="예: 학생식당">
       </div>
-      <img src="images/slide3.JPG" alt="강의실 시설 경로" style="width: 90%; border-radius: 10px; margin-top: 4rem;">
+      <img src="images/slide3.JPG" alt="강의실 경로" style="width: 90%; border-radius: 10px; margin-top: 2rem;">
+      <button class="zoom-btn" onclick="window.open('ar.html')">AR 모드 보기</button>
     </div>
   </div>
 
   <div id="community" class="section">
     <button class="back-btn" onclick="goHome()">← 이전</button>
     <h2>📌 재학생 커뮤니티 공간</h2>
-    <p>추천 장소나 코스를 입력하고 다른 학생들과 공유해보세요!</p>
-    <div class="form-group">
-      <input type="text" id="spotName" placeholder="장소/코스 이름">
-      <textarea id="spotDesc" placeholder="설명"></textarea>
-      <button onclick="addSpot()">추천 등록하기</button>
-    </div>
-    <div class="community-list" id="spotList">
-      <div class="community-item">
-        <strong>복지관 라운지 → 북악관 벚꽃길 코스</strong>
-        <p>시험 끝나고 가볍게 산책하기 좋아요. 사진 찍기에도 굿!</p>
-      </div>
-    </div>
+    <input id="spotName" placeholder="장소 이름"><br>
+    <textarea id="spotDesc" placeholder="설명"></textarea><br>
+    <button onclick="addSpot()">등록</button>
+    <div id="spotList"></div>
+  </div>
 
-    <h3 style="margin-top: 3rem;">🎪 시설/행사 안내</h3>
-    <select onchange="showFacilityContent(this.value)">
-      <option value="">-- 선택 --</option>
-      <option value="show">공연</option>
-      <option value="exhibit">전시</option>
-      <option value="event">이벤트</option>
-    </select>
-    <div id="facilityContent" style="margin-top: 1rem;"></div>
+  <div id="usageMap" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <img src="images/facility-usage-ui.png" alt="시설 이용량 UI" style="width:90%; margin-top:2rem; border-radius: 10px;">
+    <div class="checkboxes">
+      <label><input type="checkbox"> 밀도 정보</label>
+      <label><input type="checkbox"> 시설 현황</label>
+      <label><input type="checkbox"> 명소</label>
+    </div>
+    <button class="zoom-btn" onclick="window.open('images/facility-usage-full.png')">크게 보기</button>
   </div>
 
   <script>
     function showSection(id) {
+      history.pushState({ page: id }, '', '#' + id);
       document.querySelector('.home-interface').style.display = 'none';
       document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
       document.getElementById(id).style.display = 'block';
     }
 
     function goHome() {
+      history.pushState({}, '', '#');
       document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
       document.querySelector('.home-interface').style.display = 'flex';
     }
+
+    window.addEventListener('popstate', () => {
+      if (location.hash) {
+        const id = location.hash.replace('#', '');
+        showSection(id);
+      } else {
+        goHome();
+      }
+    });
 
     function addSpot() {
       const name = document.getElementById('spotName').value;
       const desc = document.getElementById('spotDesc').value;
       if (name && desc) {
-        const list = document.getElementById('spotList');
-        const item = document.createElement('div');
-        item.className = 'community-item';
-        item.innerHTML = `<strong>${name}</strong><p>${desc}</p>`;
-        list.prepend(item);
+        const div = document.createElement('div');
+        div.innerHTML = `<strong>${name}</strong><p>${desc}</p>`;
+        document.getElementById('spotList').prepend(div);
         document.getElementById('spotName').value = '';
         document.getElementById('spotDesc').value = '';
       }
-    }
-
-    function showFacilityContent(type) {
-      const content = {
-        show: "🎤 <strong>공연 안내:</strong> 대운동장 야외무대에서 6월 5일 오후 6시부터 힙합 공연이 열립니다.",
-        exhibit: "🖼️ <strong>전시 안내:</strong> 예술관 3층 갤러리에서 디자인학부 졸업 전시가 진행 중입니다.",
-        event: "🎈 <strong>이벤트 안내:</strong> 복지관 앞 광장에서 플리마켓이 열립니다! 먹거리와 굿즈가 가득!"
-      };
-      document.getElementById('facilityContent').innerHTML = `<div style="background:white;padding:1rem;border-radius:8px;">${content[type] || ''}</div>`;
     }
   </script>
 </body>
