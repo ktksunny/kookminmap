@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>국민대 로컬맵 서비스</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>국민대 로컬맵 서비스</title>
+<style>
     body { font-family: sans-serif; background: #f0f4f8; margin: 0; text-align: center; }
     .home-interface { display: flex; flex-direction: column; align-items: center; margin-top: 3rem; }
     .icon-row { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
@@ -98,99 +99,90 @@
   </style>
 </head>
 <body>
-  <div class="home-interface">
-    <img src="images/kmap-logo.png" class="main-logo" />
-    <div class="icon-row">
-      <img src="images/user-icon.png" />
-      <img src="images/mascot.png" />
-    </div>
-    <div class="menu-vertical">
-      <button onclick="showSection('buildingMove')">건물 찾기</button>
-      <button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
-      <button onclick="showSection('community')">커뮤니티</button>
-      <button onclick="showSection('facilityStatus')">시설 보기</button>
-    </div>
-  </div>
-
-  <div id="buildingMove" class="section">
-    <button class="back-btn" onclick="goHome()">← 이전</button>
-    <div class="destination-label">도착지 입력</div>
-    <div class="destination-input" style="text-align: center;">
-      <select><option>학생식당</option><option>북악관</option><option>복지관</option></select>
-    </div>
-    <img src="images/slide2.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;" />
-    <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
-  </div>
-
-  <div id="facilityInfo" class="section">
-    <button class="back-btn" onclick="goHome()">← 이전</button>
-    <div class="destination-label">도착지 입력</div>
-    <div class="destination-input" style="text-align: center;">
-      <input type="text" placeholder="예: 학생식당" />
-    </div>
-    <img src="images/slide3.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;" />
-    <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
-  </div>
-
-  <div id="community" class="section">
-    <button class="back-btn" onclick="goHome()">← 이전</button>
-    <div class="community-header">
-      <button class="active">커뮤니티</button>
-      <button>마이페이지</button>
-    </div>
-
-    <div class="community-subtabs">
-      <button class="active">장소 공유</button>
-      <button>정보 공유</button>
-    </div>
-
-    <div class="community-cards" id="communityCards">
-      <div class="post-it"><img src="images/user-icon.png" class="profile" />
-        <strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰함 😺
+<div class="home-interface">
+<img class="main-logo" src="images/kmap-logo.png"/>
+<div class="icon-row">
+<img src="images/user-icon.png"/>
+<img src="images/mascot.png"/>
+</div>
+<div class="menu-vertical">
+<button onclick="showSection('buildingMove')">건물 찾기</button>
+<button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
+<button onclick="showSection('community')">커뮤니티</button>
+<button onclick="showSection('facilityStatus')">시설 보기</button>
+</div>
+</div>
+<div class="section" id="buildingMove">
+<button class="back-btn" onclick="goHome()">← 이전</button>
+<div class="destination-label">도착지 입력</div>
+<div class="destination-input" style="text-align: center;">
+<select style="width: 90%; max-width: 300px; padding: 0.5rem; border-radius: 8px;"><option>학생식당</option><option>북악관</option><option>복지관</option></select>
+</div>
+<img src="images/slide2.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;"/>
+<button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
+</div>
+<div class="section" id="facilityInfo">
+<button class="back-btn" onclick="goHome()">← 이전</button>
+<div class="destination-label">도착지 입력</div>
+<div class="destination-input" style="text-align: center;">
+<input placeholder="예: 학생식당" style="width: 90%; max-width: 300px; padding: 0.5rem; border-radius: 8px;" type="text"/>
+</div>
+<img src="images/slide3.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;"/>
+<button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
+</div>
+<div class="section" id="community">
+<button class="back-btn" onclick="goHome()">← 이전</button>
+<div class="community-header">
+<button class="active">커뮤니티</button>
+<button>마이페이지</button>
+</div>
+<div class="community-subtabs">
+<button class="active">장소 공유</button>
+<button>정보 공유</button>
+</div>
+<div class="community-cards" id="communityCards">
+<div class="post-it"><img class="profile" src="images/user-icon.png"/>
+<strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰함 😺
       </div>
-      <div class="post-it"><img src="images/user-icon.png" class="profile" />
-        <strong>야경 명소</strong><br/>복지관 옥상에서 별 보기 좋음 🌟
+<div class="post-it"><img class="profile" src="images/user-icon.png"/>
+<strong>야경 명소</strong><br/>복지관 옥상에서 별 보기 좋음 🌟
       </div>
-      <div class="post-it"><img src="images/user-icon.png" class="profile" />
-        <strong>조용한 공부 장소</strong><br/>도서관 지하 B103이 진짜 조용함
+<div class="post-it"><img class="profile" src="images/user-icon.png"/>
+<strong>조용한 공부 장소</strong><br/>도서관 지하 B103이 진짜 조용함
       </div>
-      <div class="post-it"><img src="images/user-icon.png" class="profile" />
-        <strong>숨겨진 벤치</strong><br/>예술관 뒤편에 사람 없는 쉼터 있음
+<div class="post-it"><img class="profile" src="images/user-icon.png"/>
+<strong>숨겨진 벤치</strong><br/>예술관 뒤편에 사람 없는 쉼터 있음
       </div>
-      <div class="post-it"><img src="images/user-icon.png" class="profile" />
-        <strong>저렴한 자판기</strong><br/>전기관 1층 음료수 700원밖에 안 함
+<div class="post-it"><img class="profile" src="images/user-icon.png"/>
+<strong>저렴한 자판기</strong><br/>전기관 1층 음료수 700원밖에 안 함
       </div>
-      <div class="post-it"><img src="images/user-icon.png" class="profile" />
-        <strong>시험기간 꿀팁</strong><br/>심야 버스 시간표 미리 확인 필수!
+<div class="post-it"><img class="profile" src="images/user-icon.png"/>
+<strong>시험기간 꿀팁</strong><br/>심야 버스 시간표 미리 확인 필수!
       </div>
-    </div>
-
-    <button onclick="document.getElementById('writeForm').style.display='block'" class="zoom-btn">작성하기</button>
-
-    <div class="community-write" id="writeForm" style="display:none;">
-      <input type="text" id="newTitle" placeholder="제목" /><br />
-      <textarea id="newDesc" placeholder="글을 작성해주세요"></textarea><br />
-      <input type="file" id="imgUpload" /><br />
-      <button onclick="addPost()">등록</button>
-    </div>
-  </div>
-
-  <div id="facilityStatus" class="section">
-    <button class="back-btn" onclick="goHome()">← 이전</button>
-    <h2>시설 보기</h2>
-    <div class="facility-tabs">
-      <button id="btn-density" onclick="showFacility('density')">밀도 정보</button>
-      <button id="btn-status" onclick="showFacility('status')">시설 현황</button>
-      <button id="btn-highlight" onclick="showFacility('highlight')">명소</button>
-    </div>
-    <div id="facilityContent">
-      <img id="facilityImg" src="images/facility-density.png" style="width:90%; border-radius:10px;" />
-      <br />
-      <button class="zoom-btn" onclick="zoomFacility()">크게 보기</button>
-    </div>
-  </div>
-
-  <script>
+</div>
+<button class="zoom-btn" onclick="document.getElementById('writeForm').style.display='block'">작성하기</button>
+<div class="community-write" id="writeForm" style="display:none;">
+<input id="newTitle" placeholder="제목" style="width: 90%; max-width: 300px; padding: 0.5rem; border-radius: 8px;" type="text"/><br/>
+<textarea id="newDesc" placeholder="글을 작성해주세요"></textarea><br/>
+<input id="imgUpload" type="file"/><br/>
+<button onclick="addPost()">등록</button>
+</div>
+</div>
+<div class="section" id="facilityStatus">
+<button class="back-btn" onclick="goHome()">← 이전</button>
+<h2>시설 보기</h2>
+<div class="facility-tabs">
+<button id="btn-density" onclick="showFacility('density')">밀도 정보</button>
+<button id="btn-status" onclick="showFacility('status')">시설 현황</button>
+<button id="btn-highlight" onclick="showFacility('highlight')">명소</button>
+</div>
+<div id="facilityContent">
+<img id="facilityImg" src="images/facility-density.png" style="width:90%; border-radius:10px;"/>
+<br/>
+<button class="zoom-btn" onclick="zoomFacility()">크게 보기</button>
+</div>
+</div>
+<script>
     function showSection(id) {
       document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
       document.querySelector('.home-interface').style.display = 'none';
@@ -237,6 +229,10 @@
       document.getElementById("newDesc").value = "";
       document.getElementById("writeForm").style.display = "none";
     }
-  </script>
+  
+window.addEventListener("popstate", function () {
+  goHome();
+});
+</script>
 </body>
 </html>
