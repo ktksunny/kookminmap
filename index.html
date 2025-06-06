@@ -6,9 +6,7 @@
   <title>국민대 로컬맵 서비스</title>
   <style>
     body { font-family: sans-serif; background: #f0f4f8; margin: 0; text-align: center; }
-    .home-interface {
-      display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 3rem;
-    }
+    .home-interface { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 3rem; }
     .icon-row { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-bottom: 2rem; }
     .icon-row img { width: 60px; height: auto; border-radius: 10px; }
     .main-logo { width: 100px; margin-bottom: 2rem; }
@@ -36,8 +34,12 @@
     .destination-input select {
       border: none; outline: none; width: 100%; font-size: 1rem;
     }
-    .checkboxes { display: flex; flex-direction: column; align-items: flex-start; padding: 1rem; }
-    .checkboxes label { margin: 0.5rem 0; }
+    .tab-buttons { display: flex; justify-content: center; gap: 1rem; margin: 1rem 0; }
+    .tab-buttons button {
+      padding: 0.6rem 1rem; border: none; border-radius: 20px;
+      cursor: pointer; background: #ccc; color: black;
+    }
+    .tab-buttons button.active { background: #333; color: white; }
     .zoom-btn { margin-top: 1rem; padding: 0.6rem 1.2rem; background: #333; color: white; border: none; border-radius: 8px; cursor: pointer; }
   </style>
 </head>
@@ -52,7 +54,7 @@
       <button onclick="showSection('buildingMove')">건물 찾기</button>
       <button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
       <button onclick="showSection('community')">커뮤니티</button>
-      <button onclick="showSection('usageMap')">시설 이용량 보기</button>
+      <button onclick="showSection('facilityStatus')">시설 보기</button>
     </div>
   </div>
 
@@ -89,15 +91,17 @@
     <div id="spotList"></div>
   </div>
 
-  <div id="usageMap" class="section">
+  <div id="facilityStatus" class="section">
     <button class="back-btn" onclick="goHome()">← 이전</button>
-    <img src="images/facility-usage-ui.png" alt="시설 이용량 UI" style="width:90%; margin-top:2rem; border-radius: 10px;">
-    <div class="checkboxes">
-      <label><input type="checkbox"> 밀도 정보</label>
-      <label><input type="checkbox"> 시설 현황</label>
-      <label><input type="checkbox"> 명소</label>
+    <div class="tab-buttons">
+      <button onclick="selectTab('density')" id="tab-density">밀도 정보</button>
+      <button onclick="selectTab('status')" id="tab-status">시설 현황</button>
+      <button onclick="selectTab('highlight')" id="tab-highlight">명소</button>
     </div>
-    <button class="zoom-btn" onclick="window.open('images/facility-usage-full.png')">크게 보기</button>
+    <div id="facilityImage">
+      <img src="images/facility-usage-ui.png" style="width: 90%; border-radius: 10px;">
+      <button class="zoom-btn" onclick="window.open('images/f2.png')">크게 보기</button>
+    </div>
   </div>
 
   <script>
@@ -132,6 +136,24 @@
         document.getElementById('spotList').prepend(div);
         document.getElementById('spotName').value = '';
         document.getElementById('spotDesc').value = '';
+      }
+    }
+
+    function selectTab(type) {
+      document.getElementById('tab-density').classList.remove('active');
+      document.getElementById('tab-status').classList.remove('active');
+      document.getElementById('tab-highlight').classList.remove('active');
+
+      const facilityImage = document.getElementById('facilityImage');
+      if (type === 'density') {
+        document.getElementById('tab-density').classList.add('active');
+        facilityImage.innerHTML = '<img src="images/facility-usage-ui.png" style="width: 90%; border-radius: 10px;"><button class="zoom-btn" onclick="window.open(\'images/f2.png\')">크게 보기</button>';
+      } else if (type === 'status') {
+        document.getElementById('tab-status').classList.add('active');
+        facilityImage.innerHTML = '<img src="images/f2.png" style="width: 90%; border-radius: 10px;"><button class="zoom-btn" onclick="window.open(\'images/f2ful.png\')">크게 보기</button>';
+      } else if (type === 'highlight') {
+        document.getElementById('tab-highlight').classList.add('active');
+        facilityImage.innerHTML = '<img src="images/f3.png" style="width: 90%; border-radius: 10px;"><button class="zoom-btn" onclick="window.open(\'images/f3ful.png\')">크게 보기</button>';
       }
     }
   </script>
