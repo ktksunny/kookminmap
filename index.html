@@ -2,9 +2,160 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>국민대 로컬맵 서비스 (최신버전)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>국민대 로컬맵 서비스</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f4f8; margin: 0; text-align: center; }
+    .home-interface { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 3rem; }
+    .icon-row { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .icon-row img { width: 60px; height: auto; border-radius: 10px; }
+    .main-logo { width: 100px; margin-bottom: 2rem; }
+    .menu-vertical button {
+      display: block; width: 200px; margin: 0.5rem 0; padding: 1rem;
+      font-size: 1rem; border: none; background: black; color: white; border-radius: 6px; cursor: pointer;
+    }
+    .section { display: none; margin-top: 2rem; }
+    .back-btn {
+      position: absolute; top: 10px; left: 10px;
+      background: #fff; border: 1px solid #aaa;
+      padding: 0.4rem 1rem; border-radius: 20px;
+      cursor: pointer; z-index: 1000;
+    }
+    .map-container { position: relative; text-align: center; }
+    .destination-label { font-weight: bold; margin-top: 1rem; font-size: 1.1rem; }
+    .destination-input {
+      position: relative; margin-top: 0.5rem;
+      width: 80%; max-width: 300px; margin-left: auto; margin-right: auto;
+      display: flex; justify-content: center; align-items: center;
+      background: white; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 0.5rem 1rem;
+    }
+    .destination-input input,
+    .destination-input select {
+      border: none; outline: none; width: 100%; font-size: 1rem;
+    }
+    .tab-buttons { display: flex; justify-content: center; gap: 1rem; margin: 1rem 0; }
+    .tab-buttons button {
+      padding: 0.6rem 1rem; border: none; border-radius: 20px;
+      cursor: pointer; background: #ccc; color: black;
+    }
+    .tab-buttons button.active { background: #333; color: white; }
+    .zoom-btn { margin-top: 1rem; padding: 0.6rem 1.2rem; background: #333; color: white; border: none; border-radius: 8px; cursor: pointer; }
+  </style>
 </head>
 <body>
-  <h1>최신 index.html 은 이후 채워집니다.</h1>
+  <div class="home-interface">
+    <img src="images/kmap-logo.png" alt="kmap logo" class="main-logo">
+    <div class="icon-row">
+      <img src="images/user-icon.png" alt="사용자 아이콘">
+      <img src="images/mascot.png" alt="국민이 마스코트">
+    </div>
+    <div class="menu-vertical">
+      <button onclick="showSection('buildingMove')">건물 찾기</button>
+      <button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
+      <button onclick="showSection('community')">커뮤니티</button>
+      <button onclick="showSection('facilityStatus')">시설 보기</button>
+    </div>
+  </div>
+
+  <div id="buildingMove" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <div class="map-container">
+      <div class="destination-label">도착지 입력</div>
+      <div class="destination-input">
+        <select><option>학생식당</option><option>북악관</option><option>복지관</option></select>
+      </div>
+      <img src="images/slide2.JPG" alt="건물 간 경로" style="width: 90%; border-radius: 10px; margin-top: 2rem;">
+      <button class="zoom-btn" onclick="window.open('ar.html')">AR 모드 보기</button>
+    </div>
+  </div>
+
+  <div id="facilityInfo" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <div class="map-container">
+      <div class="destination-label">도착지 입력</div>
+      <div class="destination-input">
+        <input type="text" placeholder="예: 학생식당">
+      </div>
+      <img src="images/slide3.JPG" alt="강의실 경로" style="width: 90%; border-radius: 10px; margin-top: 2rem;">
+      <button class="zoom-btn" onclick="window.open('ar.html')">AR 모드 보기</button>
+    </div>
+  </div>
+
+  <div id="community" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>📌 재학생 커뮤니티 공간</h2>
+    <input id="spotName" placeholder="장소 이름"><br>
+    <textarea id="spotDesc" placeholder="설명"></textarea><br>
+    <button onclick="addSpot()">등록</button>
+    <div id="spotList"></div>
+  </div>
+
+  <div id="facilityStatus" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <div class="tab-buttons">
+      <button onclick="selectTab('density')" id="tab-density">밀도 정보</button>
+      <button onclick="selectTab('status')" id="tab-status">시설 현황</button>
+      <button onclick="selectTab('highlight')" id="tab-highlight">명소</button>
+    </div>
+    <div id="facilityImage">
+      <img src="images/facility-usage-ui.png" style="width: 90%; border-radius: 10px;">
+      <button class="zoom-btn" onclick="window.open('images/f2.png')">크게 보기</button>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      history.pushState({ page: id }, '', '#' + id);
+      document.querySelector('.home-interface').style.display = 'none';
+      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function goHome() {
+      history.pushState({}, '', '#');
+      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+      document.querySelector('.home-interface').style.display = 'flex';
+    }
+
+    window.addEventListener('popstate', () => {
+      if (location.hash) {
+        const id = location.hash.replace('#', '');
+        showSection(id);
+      } else {
+        goHome();
+      }
+    });
+
+    function addSpot() {
+      const name = document.getElementById('spotName').value;
+      const desc = document.getElementById('spotDesc').value;
+      if (name && desc) {
+        const div = document.createElement('div');
+        div.innerHTML = `<strong>${name}</strong><p>${desc}</p>`;
+        document.getElementById('spotList').prepend(div);
+        document.getElementById('spotName').value = '';
+        document.getElementById('spotDesc').value = '';
+      }
+    }
+
+    function selectTab(type) {
+      document.getElementById('tab-density').classList.remove('active');
+      document.getElementById('tab-status').classList.remove('active');
+      document.getElementById('tab-highlight').classList.remove('active');
+
+      const facilityImage = document.getElementById('facilityImage');
+      if (type === 'density') {
+        document.getElementById('tab-density').classList.add('active');
+        facilityImage.innerHTML = '<img src="images/facility-usage-ui.png" style="width: 90%; border-radius: 10px;"><button class="zoom-btn" onclick="window.open(\'images/f2.png\')">크게 보기</button>';
+      } else if (type === 'status') {
+        document.getElementById('tab-status').classList.add('active');
+        facilityImage.innerHTML = '<img src="images/f2.png" style="width: 90%; border-radius: 10px;"><button class="zoom-btn" onclick="window.open(\'images/f2ful.png\')">크게 보기</button>';
+      } else if (type === 'highlight') {
+        document.getElementById('tab-highlight').classList.add('active');
+        facilityImage.innerHTML = '<img src="images/f3.png" style="width: 90%; border-radius: 10px;"><button class="zoom-btn" onclick="window.open(\'images/f3ful.png\')">크게 보기</button>';
+      }
+    }
+  </script>
 </body>
 </html>
