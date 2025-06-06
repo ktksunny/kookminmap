@@ -102,7 +102,7 @@
 <div class="home-interface">
 <img class="main-logo" src="images/kmap-logo.png"/>
 <div class="icon-row">
-<img src="images/user-icon.png"/>
+<img onclick="showSection('login')" src="images/user-icon.png" style="cursor:pointer;"/>
 <img onclick="showSection('customizing')" src="images/mascot.png" style="cursor:pointer;"/>
 </div>
 <div class="menu-vertical">
@@ -134,32 +134,13 @@
 <button class="back-btn" onclick="goHome()">← 이전</button>
 <div class="community-header">
 <button class="active">커뮤니티</button>
-<button>마이페이지</button>
+<button onclick="showSection('customizing')">마이페이지</button>
 </div>
 <div class="community-subtabs">
 <button class="active">장소 공유</button>
 <button>정보 공유</button>
 </div>
-<div class="community-cards" id="communityCards">
-<div class="post-it"><img class="profile" src="images/user-icon.png"/>
-<strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰 😺
-      </div>
-<div class="post-it"><img class="profile" src="images/user-icon.png"/>
-<strong>야경 명소</strong><br/>북악관 엘리베이터 꼭대기에서 창밖을 보기 🌟
-      </div>
-<div class="post-it"><img class="profile" src="images/user-icon.png"/>
-<strong>잠시 잠을 자고 싶을 때</strong><br/>도서관 5층 빈백 / 도서관 B1 해동 빈백
-      </div>
-<div class="post-it"><img class="profile" src="images/user-icon.png"/>
-<strong>숨겨진 벤치</strong><br/>용두리 위로 올라가면 나오는 성곡동산
-      </div>
-<div class="post-it"><img class="profile" src="images/user-icon.png"/>
-<strong>저렴한 자판기</strong><br/>북악관 3층 무인 커피자판기가 가장 저렴렴
-      </div>
-<div class="post-it"><img class="profile" src="images/user-icon.png"/>
-<strong>시험기간 꿀팁</strong><br/>심야 버스 시간표 미리 확인 필수!
-      </div>
-</div>
+<div class="community-cards" id="communityCards"><div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰 😺</div><div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>야경 명소</strong><br/>북악관 엘리베이터 꼭대기에서 창밖을 보기 🌟</div><div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>잠시 잠을 자고 싶을 때</strong><br/>도서관 5층 빈백 / 도서관 B1 해동 빈백</div><div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>숨겨진 벤치</strong><br/>용두리 위로 올라가면 나오는 성곡동산</div><div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>저렴한 자판기</strong><br/>북악관 3층 무인 커피자판기가 가장 저렴렴</div><div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>시험기간 꿀팁</strong><br/>심야 버스 시간표 미리 확인 필수!</div></div>
 <button class="zoom-btn" onclick="document.getElementById('writeForm').style.display='block'">작성하기</button>
 <div class="community-write" id="writeForm" style="display:none;">
 <input id="newTitle" placeholder="제목" style="width: 90%; max-width: 300px; padding: 0.5rem; border-radius: 8px;" type="text"/><br/>
@@ -241,5 +222,11 @@ history.pushState(null, null, location.href);
 <button class="back-btn" onclick="goHome()">← 이전</button>
 <h2>캐릭터 커스터마이징</h2>
 <img src="images/customizing-mascot.png" style="width:90%; border-radius:10px;"/>
+</div><div class="section" id="login">
+<button class="back-btn" onclick="goHome()">← 이전</button>
+<h2>로그인</h2>
+<input placeholder="아이디 입력" style="padding:0.5rem; width: 80%; max-width: 300px; margin: 0.5rem;" type="text"/>
+<input placeholder="비밀번호 입력" style="padding:0.5rem; width: 80%; max-width: 300px;" type="password"/>
+<br/><button class="zoom-btn">로그인</button>
 </div></body>
 </html>
