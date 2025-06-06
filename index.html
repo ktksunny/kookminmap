@@ -1,1 +1,191 @@
-<!-- 안정된 상태의 index.html이 복원될 예정 -->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>국민대 로컬맵 서비스</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f4f8; margin: 0; text-align: center; }
+    .home-interface { display: flex; flex-direction: column; align-items: center; margin-top: 3rem; }
+    .icon-row { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+    .icon-row img { width: 60px; }
+    .main-logo { width: 100px; margin-bottom: 2rem; }
+    .menu-vertical button {
+      display: block; width: 200px; margin: 0.5rem 0; padding: 1rem;
+      font-size: 1rem; border: none; background: black; color: white; border-radius: 6px; cursor: pointer;
+    }
+    .section { display: none; margin-top: 2rem; text-align: center; }
+    .back-btn {
+      position: absolute; top: 10px; left: 10px;
+      background: #fff; border: 1px solid #aaa;
+      padding: 0.4rem 1rem; border-radius: 20px; cursor: pointer;
+    }
+    .destination-label { font-weight: bold; margin-top: 1rem; font-size: 1.1rem; }
+    .destination-input {
+      margin-top: 0.5rem; width: 80%; max-width: 300px;
+      background: white; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 0.5rem 1rem;
+    }
+    .zoom-btn {
+      margin-top: 1rem; padding: 0.6rem 1.2rem;
+      background: #333; color: white; border: none; border-radius: 8px; cursor: pointer;
+    }
+
+    .facility-tabs button {
+      padding: 0.6rem 1.2rem; border: none; border-radius: 20px; margin: 0.5rem;
+      background: #ddd; color: #333; cursor: pointer;
+    }
+    .facility-tabs .active {
+      background: #3498db; color: white; font-weight: bold;
+    }
+
+    .community-header {
+      display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;
+    }
+    .community-header button {
+      padding: 0.6rem 1.2rem; border-radius: 20px; border: none; background: #dbeeff; cursor: pointer;
+    }
+    .community-header .active { background: #3498db; color: white; font-weight: bold; }
+    .community-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1rem 0; }
+    .post-it {
+      background: #fff88d; width: 160px; height: auto; border-radius: 6px;
+      padding: 1.5rem 0.5rem 0.5rem 0.5rem; text-align: left; box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .post-it img.profile {
+      position: absolute; top: 5px; left: 5px; width: 30px; border-radius: 50%;
+    }
+    .post-it::after {
+      content: ''; position: absolute; bottom: 0; right: 0;
+      border-width: 0 20px 20px 0;
+      border-style: solid;
+      border-color: transparent #f9f27d transparent transparent;
+    }
+    .community-write {
+      margin-top: 2rem;
+    }
+    .community-write textarea, .community-write input[type='text'] {
+      width: 80%; max-width: 400px; padding: 1rem; margin-top: 1rem;
+      background: #fff88d; border: none; border-radius: 6px;
+    }
+    .community-write button {
+      margin: 0.5rem; padding: 0.6rem 1.2rem; border: none; border-radius: 6px;
+      background: #3498db; color: white; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="home-interface">
+    <img src="images/kmap-logo.png" class="main-logo" />
+    <div class="icon-row">
+      <img src="images/user-icon.png" />
+      <img src="images/mascot.png" />
+    </div>
+    <div class="menu-vertical">
+      <button onclick="showSection('buildingMove')">건물 찾기</button>
+      <button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
+      <button onclick="showSection('community')">커뮤니티</button>
+      <button onclick="showSection('facilityStatus')">시설 보기</button>
+    </div>
+  </div>
+
+  <div id="buildingMove" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <div class="destination-label">도착지 입력</div>
+    <div class="destination-input">
+      <select><option>학생식당</option><option>북악관</option><option>복지관</option></select>
+    </div>
+    <img src="images/slide2.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;" />
+    <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
+  </div>
+
+  <div id="facilityInfo" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <div class="destination-label">도착지 입력</div>
+    <div class="destination-input">
+      <input type="text" placeholder="예: 학생식당" />
+    </div>
+    <img src="images/slide3.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;" />
+    <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
+  </div>
+
+  <div id="community" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <div class="community-header">
+      <button class="active">커뮤니티</button>
+      <button>마이페이지</button>
+    </div>
+    <div class="community-cards" id="communityCards">
+      <div class="post-it">
+        <img src="images/user-icon.png" class="profile" />
+        <strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰함. 😺
+      </div>
+    </div>
+    <div class="community-write">
+      <input type="text" id="newTitle" placeholder="제목" /><br />
+      <textarea id="newDesc" placeholder="글을 작성해주세요"></textarea><br />
+      <input type="file" id="imgUpload" /><br />
+      <button onclick="addPost()">등록</button>
+    </div>
+  </div>
+
+  <div id="facilityStatus" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>시설 보기</h2>
+    <div class="facility-tabs">
+      <button id="btn-density" onclick="showFacility('density')">밀도 정보</button>
+      <button id="btn-status" onclick="showFacility('status')">시설 현황</button>
+      <button id="btn-highlight" onclick="showFacility('highlight')">명소</button>
+    </div>
+    <div id="facilityContent">
+      <img id="facilityImg" src="images/facility-density.png" style="width:90%; border-radius:10px;" />
+      <br />
+      <button class="zoom-btn" onclick="zoomFacility()">크게 보기</button>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+      document.querySelector('.home-interface').style.display = 'none';
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function goHome() {
+      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+      document.querySelector('.home-interface').style.display = 'flex';
+    }
+
+    function showFacility(type) {
+      const map = {
+        density: ['images/facility-density.png', 'images/facility-density-full.png'],
+        status: ['images/facility-ui-2.png', 'images/facility-ui-2-full.png'],
+        highlight: ['images/facility-ui-3.png', 'images/facility-ui-3-full.png']
+      };
+      document.getElementById('facilityImg').src = map[type][0];
+      document.getElementById('facilityImg').setAttribute('data-full', map[type][1]);
+
+      ['density', 'status', 'highlight'].forEach(t => {
+        document.getElementById(`btn-${t}`).classList.remove('active');
+      });
+      document.getElementById(`btn-${type}`).classList.add('active');
+    }
+
+    function zoomFacility() {
+      const full = document.getElementById('facilityImg').getAttribute('data-full');
+      window.open(full, '_blank');
+    }
+
+    function addPost() {
+      const title = document.getElementById("newTitle").value;
+      const desc = document.getElementById("newDesc").value;
+      const cards = document.getElementById("communityCards");
+      const post = document.createElement("div");
+      post.className = "post-it";
+      post.innerHTML = `<img src='images/user-icon.png' class='profile' /><strong>${title}</strong><br/>${desc}`;
+      cards.prepend(post);
+    }
+  </script>
+</body>
+</html>
