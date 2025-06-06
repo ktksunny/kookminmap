@@ -1,12 +1,1 @@
-function showSection(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-function goBack() {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-}
-
-window.addEventListener("popstate", function () {
-  goBack();
-});
+// 최신 script.js 코드가 이곳에 작성될 예정입니다
