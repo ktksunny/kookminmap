@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>국민대 로컬맵 서비스</title>
   <style>
-    body { font-family: sans-serif; padding: 2rem; background: #f0f4f8; margin: 0; display: flex; flex-direction: column; align-items: center; }
-    h1 { display: none; }
+    body { font-family: sans-serif; background: #f0f4f8; margin: 0; text-align: center; }
     .home-interface {
       display: flex;
       flex-direction: column;
@@ -36,17 +35,40 @@
       cursor: pointer;
     }
     .menu-vertical button:hover { background: #444; }
-    .section { margin-top: 2rem; display: none; text-align: center; width: 100%; }
-    .form-group { margin-bottom: 1rem; }
-    .community-list { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1rem; }
-    .community-item {
-      background: #fff8b5;
-      border-left: 8px solid #f39c12;
-      padding: 1rem;
-      width: 200px;
-      border-radius: 10px;
-      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
-      text-align: left;
+    .section { display: none; margin-top: 2rem; }
+    .map-container { position: relative; text-align: center; }
+    .destination-label { font-weight: bold; margin: 1rem 0 0.5rem; font-size: 1.1rem; }
+    .destination-input {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      background: white;
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .destination-input input,
+    .destination-input select {
+      border: none;
+      outline: none;
+      width: 90%;
+      font-size: 1rem;
+    }
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
   </style>
 </head>
@@ -65,22 +87,29 @@
   </div>
 
   <div id="buildingMove" class="section">
-    <h2>건물 간 이동</h2>
-    <p>출발 건물과 도착 건물을 선택하세요.</p>
-    <div class="form-group">
-      <select><option>공학관</option><option>예술관</option><option>복지관</option></select>
-      <select><option>북악관</option><option>도서관</option><option>미술관</option></select>
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <div class="map-container">
+      <div class="destination-label">도착지 입력</div>
+      <div class="destination-input">
+        <select><option>학생식당</option><option>북악관</option><option>복지관</option></select>
+      </div>
+      <img src="images/slide2.JPG" alt="건물 간 이동 경로" style="width: 90%; border-radius: 10px; margin-top: 4rem;">
     </div>
-    <img src="images/slide2.JPG" alt="건물 간 경로" style="max-width:90%; margin-top:1rem;">
   </div>
 
   <div id="facilityInfo" class="section">
-    <h2>강의실 / 시설 찾기</h2>
-    <p>실내에서 강의실이나 시설을 찾아보세요.</p>
-    <img src="images/slide3.JPG" alt="건물 내 경로" style="max-width:90%; margin-top:1rem;">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <div class="map-container">
+      <div class="destination-label">도착지 입력</div>
+      <div class="destination-input">
+        <input type="text" placeholder="예: 학생식당">
+      </div>
+      <img src="images/slide3.JPG" alt="강의실 시설 경로" style="width: 90%; border-radius: 10px; margin-top: 4rem;">
+    </div>
   </div>
 
   <div id="community" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
     <h2>📌 재학생 커뮤니티 공간</h2>
     <p>추천 장소나 코스를 입력하고 다른 학생들과 공유해보세요!</p>
     <div class="form-group">
@@ -110,6 +139,11 @@
       document.querySelector('.home-interface').style.display = 'none';
       document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
       document.getElementById(id).style.display = 'block';
+    }
+
+    function goHome() {
+      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+      document.querySelector('.home-interface').style.display = 'flex';
     }
 
     function addSpot() {
