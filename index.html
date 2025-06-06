@@ -103,7 +103,7 @@
 <img class="main-logo" src="images/kmap-logo.png"/>
 <div class="icon-row">
 <img src="images/user-icon.png"/>
-<img src="images/mascot.png"/>
+<img onclick="showSection('customizing')" src="images/mascot.png" style="cursor:pointer;"/>
 </div>
 <div class="menu-vertical">
 <button onclick="showSection('buildingMove')">건물 찾기</button>
@@ -233,6 +233,13 @@
 window.addEventListener("popstate", function () {
   goHome();
 });
+
+// customizing 페이지에서도 뒤로가기 작동
+history.pushState(null, null, location.href);
 </script>
-</body>
+<div class="section" id="customizing">
+<button class="back-btn" onclick="goHome()">← 이전</button>
+<h2>캐릭터 커스터마이징</h2>
+<img src="images/customizing-mascot.png" style="width:90%; border-radius:10px;"/>
+</div></body>
 </html>
