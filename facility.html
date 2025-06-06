@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>시설 정보</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin: 0; padding: 1rem; }
+    button { margin: 0.5rem; padding: 1rem; font-size: 1rem; border: none; border-radius: 8px; }
+    .active { background-color: #3498db; color: white; }
+    .inactive { background-color: #ecf0f1; color: #333; }
+    img { max-width: 90%; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h2>시설 정보</h2>
+  <div>
+    <button id="densityBtn" onclick="switchMode('density')">밀도 정보</button>
+    <button id="statusBtn" onclick="switchMode('status')">시설 현황</button>
+    <button id="hotspotBtn" onclick="switchMode('hotspot')">명소</button>
+  </div>
+  <div id="imageContainer">
+    <img id="mainImage" src="images/facility-density.png" alt="시설 정보" />
+  </div>
+  <div>
+    <button onclick="openFullscreen()">크게 보기</button>
+  </div>
+
+  <script>
+    function switchMode(mode) {
+      const buttons = {
+        density: document.getElementById("densityBtn"),
+        status: document.getElementById("statusBtn"),
+        hotspot: document.getElementById("hotspotBtn")
+      };
+      const imageMap = {
+        density: "images/facility-density.png",
+        status: "images/facility-ui-2.png",
+        hotspot: "images/facility-ui-3.png"
+      };
+      const fullMap = {
+        density: "images/facility-usage-full.png",
+        status: "images/facility-ui-2-full.png",
+        hotspot: "images/facility-ui-3-full.png"
+      };
+
+      Object.keys(buttons).forEach(key => {
+        buttons[key].className = key === mode ? "active" : "inactive";
+      });
+
+      document.getElementById("mainImage").src = imageMap[mode];
+      document.getElementById("mainImage").setAttribute("data-full", fullMap[mode]);
+    }
+
+    function openFullscreen() {
+      const img = document.getElementById("mainImage");
+      const url = img.getAttribute("data-full") || img.src;
+      window.open(url, "_blank");
+    }
+
+    switchMode('density');
+  </script>
+</body>
+</html>

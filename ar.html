@@ -1,0 +1,17 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>AR 모드</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.0.1/aframe/build/aframe-ar.min.js"></script>
+    <style>body { margin: 0; overflow: hidden; }</style>
+  </head>
+  <body>
+    <a-scene embedded arjs="sourceType: webcam;">
+      <a-image src="images/facility-usage-ui.png" position="0 0 -1" rotation="-90 0 0" height="1" width="1"></a-image>
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
+</html>
