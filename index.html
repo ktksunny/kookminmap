@@ -50,6 +50,35 @@
       font-size: 20px;
       position: absolute;
     }
+    select, input, textarea { padding: 0.5rem; width: 100%; max-width: 300px; margin-top: 0.5rem; margin-bottom: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    img.route-img { max-width: 90%; margin-top: 20px; border-radius: 10px; }
+    .community-list { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1rem; }
+    .community-item {
+      background: #fff8b5;
+      border-left: 8px solid #f39c12;
+      padding: 1rem;
+      width: 200px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+    .facility-tab {
+      margin: 1rem auto;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .facility-tab button {
+      padding: 0.5rem 1rem;
+      border: 1px solid #888;
+      background: #eee;
+      cursor: pointer;
+    }
+    .facility-tab .active {
+      background: #2980b9;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -66,7 +95,55 @@
       <button onclick="showSection('facilityStatus')">시설 보기</button>
     </div>
   </div>
+  <!-- 건물 간 이동 -->
+  <div id="buildingMove" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>건물 간 이동</h2>
+    <p>출발 건물과 도착 건물을 선택하세요.</p>
+    <select><option>공학관</option><option>복지관</option><option>도서관</option><option>예술관</option><option>북악관</option></select>
+    <select><option>공학관</option><option>복지관</option><option>도서관</option><option>예술관</option><option>북악관</option></select>
+    <div><img src="images/slide2.JPG" alt="건물 간 경로" class="route-img"/></div>
+  </div>
 
+  <!-- 강의실 / 시설 찾기 -->
+  <div id="facilityInfo" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>강의실 / 시설 찾기</h2>
+    <p>실내에서 강의실이나 시설을 찾아보세요.</p>
+    <select><option>학생식당</option><option>강의실</option><option>복지매장</option></select>
+    <div><img src="images/slide3.JPG" alt="건물 내 경로" class="route-img"/></div>
+  </div>
+
+  <!-- 커뮤니티 -->
+  <div id="community" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>📌 재학생 커뮤니티 공간</h2>
+    <p>추천 장소나 코스를 입력하고 공유해보세요.</p>
+    <div class="form-group"><input type="text" id="spotName" placeholder="장소/코스 이름"></div>
+    <div class="form-group"><textarea id="spotDesc" placeholder="설명 작성"></textarea></div>
+    <button onclick="addSpot()">등록</button>
+    <div class="community-list" id="spotList">
+      <div class="community-item"><strong>북악관 벚꽃길</strong><p>봄철 산책로로 최고. 국냥이도 자주 출몰!</p></div>
+      <div class="community-item"><strong>도서관 옥상</strong><p>한적하고 햇살 좋은 공간에서 공부하기 좋음.</p></div>
+    </div>
+  </div>
+
+  <!-- 시설 보기 -->
+  <div id="facilityStatus" class="section">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>시설 보기</h2>
+    <div class="facility-tab">
+      <button onclick="setFacilityTab('density')" id="tab-density" class="active">밀도 정보</button>
+      <button onclick="setFacilityTab('status')" id="tab-status">시설 현황</button>
+      <button onclick="setFacilityTab('spot')" id="tab-spot">명소</button>
+    </div>
+    <div id="facilityImage">
+      <img src="images/facility-density.png" class="route-img" />
+      <br><button onclick="window.open('images/facility-density-full.png')">크게 보기</button>
+    </div>
+  </div>
+
+  <!-- 커스터마이징 -->
   <div id="customizing" class="section customizing-section">
     <button class="back-btn" onclick="goHome()">← 이전</button>
     <h2>Customizing</h2>
@@ -75,27 +152,16 @@
       <img id="glassesOverlay" class="glasses" src="images/glasses1.svg" style="display: none;" />
     </div>
     <div class="customizing-options">
-      <div class="option-button" onclick="changeGlasses('glasses1.svg')">
-        <img src="images/glasses1.svg" />
-      </div>
-      <div class="option-button" onclick="changeGlasses('glasses2.svg')">
-        <img src="images/glasses2.svg" />
-      </div>
-      <div class="option-button" onclick="changeGlasses('glasses3.svg')">
-        <img src="images/glasses3.svg" />
-      </div>
-      <div class="option-button locked" onclick="alert('이 항목은 잠겨 있습니다!')">
-        <img src="images/boots.svg" />
-      </div>
-      <div class="option-button locked" onclick="alert('이 항목은 잠겨 있습니다!')">
-        <img src="images/sweater.svg" />
-      </div>
-      <div class="option-button locked" onclick="alert('이 항목은 잠겨 있습니다!')">
-        <img src="images/letter.svg" />
-      </div>
+      <div class="option-button" onclick="changeGlasses('glasses1.svg')"><img src="images/glasses1.svg" /></div>
+      <div class="option-button" onclick="changeGlasses('glasses2.svg')"><img src="images/glasses2.svg" /></div>
+      <div class="option-button" onclick="changeGlasses('glasses3.svg')"><img src="images/glasses3.svg" /></div>
+      <div class="option-button locked" onclick="alert('이 항목은 잠겨 있습니다!')"><img src="images/boots.svg" /></div>
+      <div class="option-button locked" onclick="alert('이 항목은 잠겨 있습니다!')"><img src="images/sweater.svg" /></div>
+      <div class="option-button locked" onclick="alert('이 항목은 잠겨 있습니다!')"><img src="images/letter.svg" /></div>
     </div>
   </div>
 
+  <!-- JS 기능 -->
   <script>
     function showSection(id) {
       document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
@@ -112,6 +178,39 @@
       const overlay = document.getElementById('glassesOverlay');
       overlay.src = 'images/' + filename;
       overlay.style.display = 'block';
+    }
+
+    function addSpot() {
+      const name = document.getElementById('spotName').value;
+      const desc = document.getElementById('spotDesc').value;
+      if (name && desc) {
+        const list = document.getElementById('spotList');
+        const item = document.createElement('div');
+        item.className = 'community-item';
+        item.innerHTML = `<strong>${name}</strong><p>${desc}</p>`;
+        list.prepend(item);
+        document.getElementById('spotName').value = '';
+        document.getElementById('spotDesc').value = '';
+      }
+    }
+
+    function setFacilityTab(tab) {
+      const tabs = ['density', 'status', 'spot'];
+      tabs.forEach(t => document.getElementById('tab-' + t).classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      const images = {
+        density: 'facility-density.png',
+        status: 'facility-ui-2.png',
+        spot: 'facility-ui-3.png'
+      };
+      const fullImages = {
+        density: 'facility-density-full.png',
+        status: 'facility-ui-2-full.png',
+        spot: 'facility-ui-3-full.png'
+      };
+      document.getElementById('facilityImage').innerHTML =
+        `<img src="images/${images[tab]}" class="route-img" /><br>
+         <button onclick="window.open('images/${fullImages[tab]}')">크게 보기</button>`;
     }
   </script>
 </body>
