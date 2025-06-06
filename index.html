@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,7 +7,7 @@
   <style>
     body { font-family: sans-serif; background: #f0f4f8; margin: 0; text-align: center; }
     .home-interface { display: flex; flex-direction: column; align-items: center; margin-top: 3rem; }
-    .icon-row { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+    .icon-row { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; cursor: pointer; }
     .icon-row img { width: 60px; }
     .main-logo { width: 100px; margin-bottom: 2rem; }
     .menu-vertical button {
@@ -21,65 +20,29 @@
       background: #fff; border: 1px solid #aaa;
       padding: 0.4rem 1rem; border-radius: 20px; cursor: pointer;
     }
-    .destination-label { font-weight: bold; margin-top: 1rem; font-size: 1.1rem; }
-    .destination-input {
-      margin-top: 0.5rem; width: 80%; max-width: 300px;
-      background: white; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      padding: 0.5rem 1rem;
+    .customizing-section img#mascot {
+      width: 180px; margin-bottom: 1rem;
     }
-    .zoom-btn {
-      margin-top: 1rem; padding: 0.6rem 1.2rem;
-      background: #333; color: white; border: none; border-radius: 8px; cursor: pointer;
-    }
-
-    .facility-tabs button {
-      padding: 0.6rem 1.2rem; border: none; border-radius: 20px; margin: 0.5rem;
-      background: #ddd; color: #333; cursor: pointer;
-    }
-    .facility-tabs .active {
-      background: #3498db; color: white; font-weight: bold;
-    }
-
-    .community-header {
-      display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;
-    }
-    .community-header button {
-      padding: 0.6rem 1.2rem; border-radius: 20px; border: none; background: #dbeeff; cursor: pointer;
-    }
-    .community-header .active { background: #3498db; color: white; font-weight: bold; }
-
-    .community-cards {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1rem 0;
-    }
-    .post-it {
+    .glasses {
       position: relative;
-      background: #fff88d; width: 180px; min-height: 180px; border-radius: 6px;
-      padding: 1.5rem 0.5rem 0.5rem 0.5rem; text-align: left;
-      box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      top: -150px;
+      width: 60px;
     }
-    .post-it img.profile {
-      position: absolute; top: 0.4rem; left: 0.4rem;
-      width: 30px; height: 30px;
-      border-radius: 6px;
+    .customizing-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      max-width: 400px;
+      margin: 0 auto;
     }
-    .post-it img.attachment {
-      max-width: 100%; margin-top: 0.5rem; border-radius: 4px;
+    .option-button {
+      background: #e2a46d; padding: 1rem; border-radius: 12px; cursor: pointer;
     }
-    .post-it::after {
-      content: ''; position: absolute; bottom: 0; right: 0;
-      border-width: 0 20px 20px 0;
-      border-style: solid;
-      border-color: transparent #f9f27d transparent transparent;
+    .option-button img {
+      width: 40px;
     }
-
-    .community-write { margin-top: 2rem; }
-    .community-write input[type='text'], .community-write textarea {
-      width: 80%; max-width: 400px; padding: 1rem; margin-top: 0.5rem;
-      background: #fff88d; border: none; border-radius: 6px;
-    }
-    .community-write button {
-      margin: 0.5rem; padding: 0.6rem 1.2rem; border: none; border-radius: 6px;
-      background: #3498db; color: white; cursor: pointer;
+    .locked::after {
+      content: '🔒'; position: absolute; top: 8px; right: 12px; font-size: 18px;
     }
   </style>
 </head>
@@ -87,8 +50,8 @@
   <div class="home-interface">
     <img src="images/kmap-logo.png" class="main-logo" />
     <div class="icon-row">
-      <img src="images/user-icon.png" />
-      <img src="images/mascot.png" />
+      <img src="images/user-icon.png" onclick="showSection('customizing')" />
+      <img src="images/mascot.png" onclick="showSection('customizing')" />
     </div>
     <div class="menu-vertical">
       <button onclick="showSection('buildingMove')">건물 찾기</button>
@@ -98,62 +61,32 @@
     </div>
   </div>
 
-  <div id="buildingMove" class="section">
+  <div id="customizing" class="section customizing-section">
     <button class="back-btn" onclick="goHome()">← 이전</button>
-    <div class="destination-label">도착지 입력</div>
-    <div class="destination-input">
-      <select><option>학생식당</option><option>북악관</option><option>복지관</option></select>
+    <h2>Customizing</h2>
+    <div style="position: relative; display: inline-block;">
+      <img id="mascotImg" src="images/customizing-mascot.png" alt="국민이" />
+      <img id="glassesOverlay" class="glasses" src="images/glasses1.svg" style="display: none;" />
     </div>
-    <img src="images/slide2.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;" />
-    <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
-  </div>
-
-  <div id="facilityInfo" class="section">
-    <button class="back-btn" onclick="goHome()">← 이전</button>
-    <div class="destination-label">도착지 입력</div>
-    <div class="destination-input">
-      <input type="text" placeholder="예: 학생식당" />
-    </div>
-    <img src="images/slide3.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;" />
-    <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
-  </div>
-
-  <div id="community" class="section">
-    <button class="back-btn" onclick="goHome()">← 이전</button>
-    <div class="community-header">
-      <button class="active">커뮤니티</button>
-      <button>마이페이지</button>
-    </div>
-    <div class="community-cards" id="spotList">
-      <div class="post-it">
-        <img class="profile" src="images/user-icon.png" />
-        <strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰함. 😺
+    <div class="customizing-options">
+      <div class="option-button" onclick="changeGlasses('glasses1.svg')">
+        <img src="images/glasses1.svg" />
       </div>
-      <div class="post-it">
-        <img class="profile" src="images/user-icon.png" />
-        <strong>야경 스팟</strong><br/>복지관 옥상에서 야경 보면 진짜 힐링됨.
+      <div class="option-button" onclick="changeGlasses('glasses2.svg')">
+        <img src="images/glasses2.svg" />
       </div>
-    </div>
-    <div class="community-write">
-      <input id="spotName" type="text" placeholder="제목" /><br />
-      <textarea id="spotDesc" placeholder="글을 작성해주세요"></textarea><br />
-      <input id="imgInput" type="file" accept="image/*" /><br />
-      <button onclick="addSpot()">등록</button>
-    </div>
-  </div>
-
-  <div id="facilityStatus" class="section">
-    <button class="back-btn" onclick="goHome()">← 이전</button>
-    <h2>시설 보기</h2>
-    <div class="facility-tabs">
-      <button id="btn-density" onclick="showFacility('density')">밀도 정보</button>
-      <button id="btn-status" onclick="showFacility('status')">시설 현황</button>
-      <button id="btn-highlight" onclick="showFacility('highlight')">명소</button>
-    </div>
-    <div id="facilityContent">
-      <img id="facilityImg" src="images/facility-density.png" style="width:90%; border-radius:10px;" />
-      <br />
-      <button class="zoom-btn" onclick="zoomFacility()">크게 보기</button>
+      <div class="option-button" onclick="changeGlasses('glasses3.svg')">
+        <img src="images/glasses3.svg" />
+      </div>
+      <div class="option-button locked" onclick="alert('이 항목은 잠겨 있습니다!')">
+        <img src="images/boots.svg" />
+      </div>
+      <div class="option-button locked" onclick="alert('이 항목은 잠겨 있습니다!')">
+        <img src="images/sweater.svg" />
+      </div>
+      <div class="option-button locked" onclick="alert('이 항목은 잠겨 있습니다!')">
+        <img src="images/letter.svg" />
+      </div>
     </div>
   </div>
 
@@ -169,50 +102,10 @@
       document.querySelector('.home-interface').style.display = 'flex';
     }
 
-    function showFacility(type) {
-      const map = {
-        density: ['images/facility-density.png', 'images/facility-density-full.png'],
-        status: ['images/facility-ui-2.png', 'images/facility-ui-2-full.png'],
-        highlight: ['images/facility-ui-3.png', 'images/facility-ui-3-full.png']
-      };
-      document.getElementById('facilityImg').src = map[type][0];
-      document.getElementById('facilityImg').setAttribute('data-full', map[type][1]);
-
-      ['density', 'status', 'highlight'].forEach(t => {
-        document.getElementById(`btn-${t}`).classList.remove('active');
-      });
-      document.getElementById(`btn-${type}`).classList.add('active');
-    }
-
-    function zoomFacility() {
-      const full = document.getElementById('facilityImg').getAttribute('data-full');
-      window.open(full, '_blank');
-    }
-
-    function addSpot() {
-      const name = document.getElementById('spotName').value;
-      const desc = document.getElementById('spotDesc').value;
-      const file = document.getElementById('imgInput').files[0];
-
-      if (name && desc) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const imgTag = file ? `<img class="attachment" src="${e.target.result}" />` : '';
-          const div = document.createElement('div');
-          div.className = 'post-it';
-          div.innerHTML = `
-            <img class="profile" src="images/user-icon.png" />
-            <strong>${name}</strong><br/>${desc}<br/>${imgTag}
-          `;
-          document.getElementById('spotList').prepend(div);
-        };
-        if (file) reader.readAsDataURL(file);
-        else reader.onload();
-
-        document.getElementById('spotName').value = '';
-        document.getElementById('spotDesc').value = '';
-        document.getElementById('imgInput').value = '';
-      }
+    function changeGlasses(filename) {
+      const overlay = document.getElementById('glassesOverlay');
+      overlay.src = 'images/' + filename;
+      overlay.style.display = 'block';
     }
   </script>
 </body>
