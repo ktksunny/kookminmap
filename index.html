@@ -13,100 +13,60 @@
       padding: 0;
       text-align: center;
     }
-    .main-container {
-      margin-top: 2rem;
-    }
-    .logo {
+    .main-logo {
       width: 100px;
-    }
-    .menu-buttons {
       margin-top: 2rem;
     }
-    .menu-buttons button {
-      display: block;
-      width: 200px;
-      margin: 0.5rem auto;
-      padding: 1rem;
-      background-color: black;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
+    .icon-row {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .icon-row img {
+      width: 50px;
       cursor: pointer;
     }
-
-    .section { display: none; padding: 1rem; }
-
+    .menu {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .menu button {
+      width: 200px;
+      padding: 0.8rem;
+      font-size: 1rem;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .section {
+      display: none;
+      padding: 1rem;
+    }
     .back-btn {
       position: absolute;
       top: 10px;
       left: 10px;
-      padding: 0.5rem 1rem;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      background: white;
+      padding: 0.4rem 1rem;
+      border: 1px solid #aaa;
+      border-radius: 20px;
       cursor: pointer;
     }
-
-    .community-header {
-      display: flex;
-      justify-content: center;
-      margin-top: 1rem;
-      gap: 2rem;
-    }
-
-    .community-header button {
-      padding: 0.6rem 1.5rem;
-      border: none;
-      border-radius: 20px;
-      background-color: #dbeeff;
-      font-weight: bold;
-    }
-
-    .community-header .active {
-      background-color: #3498db;
-      color: white;
-    }
-
-    .sub-buttons {
-      margin-top: 1rem;
-    }
-
-    .sub-buttons button {
-      background-color: #4169e1;
-      color: white;
-      padding: 0.5rem 1.5rem;
-      margin: 0.2rem;
-      border: none;
-      border-radius: 6px;
-    }
-
-    .post-it-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
     .post-it {
       background: #fff88d;
       width: 160px;
-      padding: 1.5rem 0.5rem 0.5rem 2.5rem;
-      border-radius: 6px;
+      min-height: 100px;
+      padding: 1rem;
+      margin: 0.5rem;
       text-align: left;
-      box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      border-radius: 6px;
       position: relative;
     }
-
-    .post-it img.profile {
-      top: 10px;
-      left: 10px;
-      position: absolute;
-      width: 30px;
-      border-radius: 50%;
-    }
-
     .post-it::after {
       content: '';
       position: absolute;
@@ -116,111 +76,142 @@
       border-style: solid;
       border-color: transparent #f9f27d transparent transparent;
     }
-
-    .post-form {
-      margin-top: 2rem;
+    .post-it img.profile {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
     }
-
-    .post-form input, .post-form textarea {
-      width: 80%;
-      max-width: 400px;
-      padding: 1rem;
+    .post-it strong {
+      display: block;
+      margin-left: 40px;
+      font-weight: bold;
+    }
+    .community-board {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .community-form {
       margin-top: 1rem;
-      background: #fff88d;
-      border: none;
+    }
+    .community-form input, .community-form textarea {
+      width: 80%;
+      max-width: 300px;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
       border-radius: 6px;
+      border: none;
     }
-
-    .post-form input[type="file"] {
-      background: none;
-    }
-
-    .post-form button {
-      margin: 0.5rem;
+    .community-form button {
       padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 6px;
       background: #3498db;
       color: white;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
     }
-
   </style>
 </head>
 <body>
-  <div class="main-container">
-    <img class="logo" src="images/kmap-logo.png" alt="kmap logo"/>
-    <div class="menu-buttons">
-      <button onclick="showSection('building')">건물 찾기</button>
-      <button onclick="showSection('classroom')">강의실 / 시설 찾기</button>
-      <button onclick="showSection('community')">커뮤니티</button>
-      <button onclick="showSection('event')">행사 / 시설 안내</button>
-    </div>
+  <img class="main-logo" src="images/kmap-logo.png" />
+  <div class="icon-row">
+    <img src="images/user-icon.png" onclick="showSection('login')" />
+    <img src="images/mascot.png" onclick="showSection('customizing')" />
+  </div>
+  <div class="menu">
+    <button onclick="showSection('building')">건물 찾기</button>
+    <button onclick="showSection('room')">강의실 / 시설 찾기</button>
+    <button onclick="showSection('event')">행사 / 시설 안내</button>
+    <button onclick="showSection('community')">커뮤니티</button>
   </div>
 
-  <div class="section" id="community">
+  <div class="section" id="login">
     <button class="back-btn" onclick="goHome()">← 이전</button>
-    <div class="community-header">
-      <button class="active">커뮤니티</button>
-      <button>마이페이지</button>
-    </div>
-    <div class="sub-buttons">
-      <button>장소 공유</button>
-      <button>정보 공유</button>
-    </div>
-    <div class="post-it-container" id="postContainer">
-      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰 😺</div>
-      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>야경 명소</strong><br/>북악관 엘리베이터 꼭대기에서 창밖을 보기 🌟</div>
-      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>잠시 잠을 자고 싶을 때</strong><br/>도서관 5층 빈백 / 도서관 B1 해동 빈백</div>
-      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>숨겨진 벤치</strong><br/>용두리 위로 올라가면 나오는 성곡동산</div>
-      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>저렴한 자판기</strong><br/>북악관 3층 무인 커피자판기가 가장 저렴</div>
-      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>시험기간 꿀팁</strong><br/>심야 버스 시간표 미리 확인 필수!</div>
-    </div>
-    <button onclick="document.getElementById('writeForm').style.display='block'">작성하기</button>
-    <div class="post-form" id="writeForm" style="display:none;">
-      <input type="text" id="newTitle" placeholder="제목"/><br/>
-      <textarea id="newDesc" placeholder="글을 작성해주세요"></textarea><br/>
-      <input type="file"/><br/>
-      <button onclick="addPost()">등록</button>
-    </div>
+    <h2>로그인</h2>
+    <input type="text" placeholder="아이디 입력"/><br/>
+    <input type="password" placeholder="비밀번호 입력"/><br/>
+    <button>로그인</button>
+  </div>
+
+  <div class="section" id="customizing">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>캐릭터 커스터마이징</h2>
+    <img src="images/customizing-mascot.png" style="width:90%; max-width:400px;"/>
+  </div>
+
+  <div class="section" id="building">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>도착지 입력</h2>
+    <input type="text" placeholder="예: 학생식당" />
+    <br/><img src="images/slide2.JPG" style="width: 90%; margin-top: 1rem;" />
+    <br/><button onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
+  </div>
+
+  <div class="section" id="room">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>도착지 선택</h2>
+    <select>
+      <option>학생식당</option><option>공연장</option><option>은행</option><option>편의점</option><option>플레이스앤</option>
+      <option>101호</option><option>102호</option><option>103호</option>...<option>226호</option>
+    </select>
+    <br/><img src="images/slide3.JPG" style="width: 90%; margin-top: 1rem;" />
+    <br/><button onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
   </div>
 
   <div class="section" id="event">
     <button class="back-btn" onclick="goHome()">← 이전</button>
     <h2>행사 / 시설 안내</h2>
-    <p>예정된 축제 일정, 각 건물의 개방 시간, 편의시설 운영정보 등을 안내합니다.</p>
-    <ul style="text-align:left; display:inline-block;">
-      <li>📌 6/15: 대운동장 플리마켓 운영 (10:00~17:00)</li>
-      <li>🎤 6/20: 예술관 야외무대 힙합 공연 (18:00~20:00)</li>
-      <li>🛠️ 북악관 4층 남자화장실 리모델링 공사 진행 중</li>
-      <li>🕒 편의점 운영 시간: 08:00 ~ 21:00 (일요일 휴무)</li>
-    </ul>
+    <p>📢 오늘 오후 6시 복지관 앞에서 동아리 공연이 열립니다!</p>
+    <p>🖼️ 예술관 2층에서 졸업전시회 진행 중입니다.</p>
+    <p>🎈 북악관 앞 잔디밭에서 플리마켓 운영 중입니다.</p>
+  </div>
+
+  <div class="section" id="community">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>커뮤니티</h2>
+    <div class="community-board" id="postBoard">
+      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰 😺</div>
+      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>야경 명소</strong><br/>북악관 엘리베이터 꼭대기에서 창밖을 보기 🌟</div>
+      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>잠시 잠을 자고 싶을 때</strong><br/>도서관 5층 빈백 / 도서관 B1 해동 빈백</div>
+    </div>
+    <div class="community-form">
+      <input type="text" id="postTitle" placeholder="제목"/><br/>
+      <textarea id="postContent" placeholder="글을 작성해주세요"></textarea><br/>
+      <input type="file"/><br/>
+      <button onclick="addPost()">등록</button>
+    </div>
   </div>
 
   <script>
     function showSection(id) {
-      document.querySelectorAll(".section").forEach(s => s.style.display = "none");
-      document.querySelector(".main-container").style.display = "none";
-      document.getElementById(id).style.display = "block";
+      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+      document.querySelector('.menu').style.display = 'none';
+      document.querySelector('.main-logo').style.display = 'none';
+      document.querySelector('.icon-row').style.display = 'none';
+      document.getElementById(id).style.display = 'block';
     }
-
     function goHome() {
-      document.querySelectorAll(".section").forEach(s => s.style.display = "none");
-      document.querySelector(".main-container").style.display = "block";
+      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+      document.querySelector('.menu').style.display = 'flex';
+      document.querySelector('.main-logo').style.display = 'block';
+      document.querySelector('.icon-row').style.display = 'flex';
     }
 
     function addPost() {
-      const title = document.getElementById("newTitle").value;
-      const desc = document.getElementById("newDesc").value;
-      if (!title || !desc) return;
-      const container = document.getElementById("postContainer");
+      const title = document.getElementById("postTitle").value;
+      const content = document.getElementById("postContent").value;
+      if (!title || !content) return;
       const post = document.createElement("div");
       post.className = "post-it";
-      post.innerHTML = `<img class='profile' src='images/user-icon.png'/><strong>${title}</strong><br/>${desc}`;
-      container.prepend(post);
-      document.getElementById("newTitle").value = "";
-      document.getElementById("newDesc").value = "";
-      document.getElementById("writeForm").style.display = "none";
+      post.innerHTML = `<img class="profile" src="images/user-icon.png"/><strong>${title}</strong><br/>${content}`;
+      document.getElementById("postBoard").prepend(post);
+      document.getElementById("postTitle").value = "";
+      document.getElementById("postContent").value = "";
     }
 
     window.addEventListener("popstate", function () {
