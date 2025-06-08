@@ -6,76 +6,96 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>국민대 로컬맵 서비스</title>
 <style>
-    body { font-family: sans-serif; background: #f0f4f8; margin: 0; text-align: center; }
-    .home-interface { display: flex; flex-direction: column; align-items: center; margin-top: 3rem; }
-    .icon-row { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
-    .icon-row img { width: 60px; }
-    .main-logo { width: 100px; margin-bottom: 2rem; }
-    .menu-vertical button {
-      display: block; width: 200px; margin: 0.5rem 0; padding: 1rem;
-      font-size: 1rem; border: none; background: black; color: white; border-radius: 6px; cursor: pointer;
-    }
-    .section { display: none; margin-top: 2rem; text-align: center; }
-    .back-btn {
-      position: absolute; top: 10px; left: 10px;
-      background: #fff; border: 1px solid #aaa;
-      padding: 0.4rem 1rem; border-radius: 20px; cursor: pointer;
-    }
-    .destination-label { font-weight: bold; margin-top: 1rem; font-size: 1.1rem; }
-    .destination-input {
-      margin-top: 0.5rem; width: 80%; max-width: 300px;
-      background: white; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      padding: 0.5rem 1rem;
-    }
-    .zoom-btn {
-      margin-top: 1rem; padding: 0.6rem 1.2rem;
-      background: #333; color: white; border: none; border-radius: 8px; cursor: pointer;
-    }
+  body { font-family: sans-serif; background: #f0f4f8; margin: 0; text-align: center; }
+  .home-interface { display: flex; flex-direction: column; align-items: center; margin-top: 3rem; }
+  .main-logo { width: 100px; margin-bottom: 2rem; }
+  .icon-row { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+  .icon-row img { width: 60px; }
+  .menu-vertical button {
+    display: block; width: 200px; margin: 0.5rem 0; padding: 1rem;
+    font-size: 1rem; border: none; background: black; color: white; border-radius: 6px; cursor: pointer;
+  }
+  .section { display: none; margin-top: 2rem; text-align: center; }
+  .back-btn {
+    position: absolute; top: 10px; left: 10px;
+    background: #fff; border: 1px solid #aaa;
+    padding: 0.4rem 1rem; border-radius: 20px; cursor: pointer;
+  }
+  .destination-label { font-weight: bold; margin-top: 1rem; font-size: 1.1rem; }
+  .destination-input {
+    margin-top: 0.5rem; width: 80%; max-width: 300px;
+    background: white; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 0.5rem 1rem;
+  }
+  .zoom-btn {
+    margin-top: 1rem; padding: 0.6rem 1.2rem;
+    background: #333; color: white; border: none; border-radius: 8px; cursor: pointer;
+  }
+  .facility-tabs {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;
+  }
+  .facility-tabs button {
+    padding: 0.5rem 1rem; border-radius: 20px; border: none; background: #ddd; cursor: pointer;
+  }
+  .facility-tabs button.active {
+    background: #3498db; color: white; font-weight: bold;
+  }
 </style>
 </head>
 <body>
 <div class="home-interface">
-<img class="main-logo" src="images/kmap-logo.png"/>
-<div class="icon-row">
-<img onclick="showSection('login')" src="images/user-icon.png" style="cursor:pointer;"/>
-</div>
-<div class="menu-vertical">
-<button onclick="showSection('buildingMove')">건물 찾기</button>
-<button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
-<button onclick="showSection('community')">커뮤니티</button>
-<button onclick="showSection('facilityStatus')">시설 보기</button>
-</div>
+  <img class="main-logo" src="images/kmap-logo.png"/>
+  <div class="icon-row">
+    <img onclick="showSection('login')" src="images/user-icon.png" style="cursor:pointer;"/>
+  </div>
+  <div class="menu-vertical">
+    <button onclick="showSection('buildingMove')">건물 찾기</button>
+    <button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
+    <button onclick="showSection('community')">커뮤니티</button>
+  </div>
 </div>
 
 <div class="section" id="buildingMove">
-<button class="back-btn" onclick="goHome()">← 이전</button>
-<div class="destination-label">도착지 입력</div>
-<div class="destination-input">
-<input placeholder="예: 학생식당" style="width: 90%; max-width: 300px; padding: 0.5rem; border-radius: 8px;" type="text"/>
-</div>
-<img src="images/slide2.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;"/>
-<button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
+  <button class="back-btn" onclick="goHome()">← 이전</button>
+  <div class="destination-label">도착지 입력</div>
+  <div class="destination-input">
+    <input placeholder="예: 학생식당" style="width: 90%; max-width: 300px; padding: 0.5rem; border-radius: 8px;" type="text"/>
+  </div>
+  <img id="buildingRouteImg" src="images/slide2.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;"/>
+  <div class="facility-tabs">
+    <button onclick="setFacilityOverlay('buildingRouteImg','density')" id="bd-d">밀도 정보</button>
+    <button onclick="setFacilityOverlay('buildingRouteImg','status')" id="bd-s">시설 현황</button>
+    <button onclick="setFacilityOverlay('buildingRouteImg','highlight')" id="bd-h">명소</button>
+    <button onclick="setFacilityOverlay('buildingRouteImg','route')">길찾기</button>
+  </div>
+  <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
 </div>
 
 <div class="section" id="facilityInfo">
-<button class="back-btn" onclick="goHome()">← 이전</button>
-<div class="destination-label">도착지 선택</div>
-<div class="destination-input">
-<select style="width: 90%; max-width: 300px; padding: 0.5rem; border-radius: 8px;">
-<option>학생식당</option><option>공연장</option><option>은행</option><option>편의점</option><option>플레이스앤</option>
+  <button class="back-btn" onclick="goHome()">← 이전</button>
+  <div class="destination-label">도착지 선택</div>
+  <div class="destination-input">
+    <select style="width: 90%; max-width: 300px; padding: 0.5rem; border-radius: 8px;">
+      <option>학생식당</option><option>공연장</option><option>은행</option><option>편의점</option><option>플레이스앤</option>
 <option>101호</option><option>102호</option><option>103호</option><option>104호</option><option>105호</option><option>106호</option><option>107호</option><option>108호</option><option>109호</option><option>110호</option><option>111호</option><option>112호</option><option>113호</option><option>114호</option><option>115호</option><option>116호</option><option>117호</option><option>118호</option><option>119호</option><option>120호</option><option>121호</option><option>122호</option><option>123호</option><option>124호</option><option>125호</option><option>126호</option><option>201호</option><option>202호</option><option>203호</option><option>204호</option><option>205호</option><option>206호</option><option>207호</option><option>208호</option><option>209호</option><option>210호</option><option>211호</option><option>212호</option><option>213호</option><option>214호</option><option>215호</option><option>216호</option><option>217호</option><option>218호</option><option>219호</option><option>220호</option><option>221호</option><option>222호</option><option>223호</option><option>224호</option><option>225호</option><option>226호</option>
-</select>
-</div>
-<img src="images/slide3.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;"/>
-<button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
+    </select>
+  </div>
+  <img id="facilityInfoImg" src="images/slide3.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;"/>
+  <div class="facility-tabs">
+    <button onclick="setFacilityOverlay('facilityInfoImg','density')" id="fi-d">밀도 정보</button>
+    <button onclick="setFacilityOverlay('facilityInfoImg','status')" id="fi-s">시설 현황</button>
+    <button onclick="setFacilityOverlay('facilityInfoImg','highlight')" id="fi-h">명소</button>
+    <button onclick="setFacilityOverlay('facilityInfoImg','route')">길찾기</button>
+  </div>
+  <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
 </div>
 
 <div class="section" id="login">
-<button class="back-btn" onclick="goHome()">← 이전</button>
-<h2>로그인</h2>
-<input placeholder="아이디 입력" style="padding:0.5rem; width: 80%; max-width: 300px; margin: 0.5rem;" type="text"/>
-<input placeholder="비밀번호 입력" style="padding:0.5rem; width: 80%; max-width: 300px;" type="password"/>
-<br/><button class="zoom-btn">로그인</button>
+  <button class="back-btn" onclick="goHome()">← 이전</button>
+  <h2>로그인</h2>
+  <input placeholder="아이디 입력" style="padding:0.5rem; width: 80%; max-width: 300px; margin: 0.5rem;" type="text"/>
+  <input placeholder="비밀번호 입력" style="padding:0.5rem; width: 80%; max-width: 300px;" type="password"/>
+  <br/><button class="zoom-btn">로그인</button>
 </div>
 
 <script>
@@ -87,6 +107,15 @@ function showSection(id) {
 function goHome() {
   document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
   document.querySelector('.home-interface').style.display = 'flex';
+}
+function setFacilityOverlay(imgId, type) {
+  const map = {
+    density: "images/facility-density.png",
+    status: "images/facility-ui-2.png",
+    highlight: "images/facility-ui-3.png",
+    route: imgId === "buildingRouteImg" ? "images/slide2.JPG" : "images/slide3.JPG"
+  };
+  document.getElementById(imgId).src = map[type];
 }
 window.addEventListener("popstate", function () { goHome(); });
 history.pushState(null, null, location.href);
