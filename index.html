@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -39,122 +40,163 @@
     .facility-tabs button.active {
       background: #3498db; color: white; font-weight: bold;
     }
-    .post-it-container {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem;
+
+    /* 커뮤니티 관련 추가 */
+    .community-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
     }
     .post-it {
-      background: #fff88d; width: 160px; padding: 2.5rem 0.5rem 0.5rem; border-radius: 6px;
-      text-align: left; box-shadow: 2px 2px 4px rgba(0,0,0,0.1); position: relative;
+      background: #fff88d;
+      width: 160px;
+      height: auto;
+      border-radius: 6px;
+      padding: 2.5rem 0.5rem 0.5rem 0.5rem;
+      text-align: left;
+      box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      position: relative;
     }
     .post-it img.profile {
-      position: absolute; top: 10px; left: 10px; width: 30px; border-radius: 50%;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 30px;
+      border-radius: 50%;
+    }
+    .community-write textarea, .community-write input[type='text'] {
+      width: 80%; max-width: 400px; padding: 1rem; margin-top: 1rem;
+      background: #fff88d; border: none; border-radius: 6px;
+    }
+    .community-write button {
+      margin: 0.5rem; padding: 0.6rem 1.2rem; border: none; border-radius: 6px;
+      background: #3498db; color: white; cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="home-interface">
-    <img class="main-logo" src="images/kmap-logo.png"/>
-    <div class="icon-row">
-      <img onclick="showSection('login')" src="images/user-icon.png"/>
-    </div>
-    <div class="menu-vertical">
-      <button onclick="showSection('buildingMove')">건물 찾기</button>
-      <button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
-      <button onclick="showSection('event')">행사 / 시설 안내</button>
-      <button onclick="showSection('community')">커뮤니티</button>
-    </div>
+<div class="home-interface">
+  <img class="main-logo" src="images/kmap-logo.png"/>
+  <div class="icon-row">
+    <img onclick="showSection('login')" src="images/user-icon.png"/>
   </div>
-
-  <div class="section" id="buildingMove">
-    <button class="back-btn" onclick="goHome()">← 이전</button>
-    <h2>건물 찾기</h2>
-    <div class="destination-label">도착지 입력</div>
-    <div class="destination-input">
-      <input type="text" placeholder="예: 학생회관" style="width:100%; padding:0.5rem; border-radius:6px;"/>
-    </div>
+  <div class="menu-vertical">
+    <button onclick="showSection('buildingMove')">건물 찾기</button>
+    <button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
+    <button onclick="showSection('community')">커뮤니티</button>
   </div>
+</div>
 
-  <div class="section" id="facilityInfo">
-    <button class="back-btn" onclick="goHome()">← 이전</button>
-    <h2>강의실 / 시설 찾기</h2>
-    <div class="destination-label">항목 선택</div>
-    <div class="destination-input">
-      <select style="width:100%; padding:0.5rem; border-radius:6px;">
-        <option>학생식당</option><option>공연장</option><option>은행</option><option>편의점</option><option>플레이스앤</option>
-        <option>101호</option><option>102호</option><option>103호</option>
-      </select>
-    </div>
+<div class="section" id="buildingMove">
+  <button class="back-btn" onclick="goHome()">← 이전</button>
+  <div class="destination-label">도착지 입력</div>
+  <div class="destination-input">
+    <input placeholder="예: 학생식당" style="width: 90%; max-width: 300px; padding: 0.5rem; border-radius: 8px;" type="text"/>
   </div>
-
-  <div class="section" id="event">
-    <button class="back-btn" onclick="goHome()">← 이전</button>
-    <h2>행사 / 시설 안내</h2>
-    <ul style="text-align:left; display:inline-block;">
-      <li>📌 6/15: 대운동장 플리마켓 운영 (10:00~17:00)</li>
-      <li>🎤 6/20: 예술관 야외무대 힙합 공연 (18:00~20:00)</li>
-      <li>🚰 북악관 4층 남자화장실 리모델링 공사 진행 중</li>
-      <li>🕒 편의점 운영 시간: 08:00 ~ 21:00 (일요일 휴무)</li>
-    </ul>
+  <img id="buildingRouteImg" src="images/slide2.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;"/>
+  <div class="facility-tabs">
+    <button onclick="setFacilityOverlay('buildingRouteImg','route', this)">길찾기</button>
+    <button onclick="setFacilityOverlay('buildingRouteImg','density', this)">밀도 정보</button>
+    <button onclick="setFacilityOverlay('buildingRouteImg','status', this)">시설 현황</button>
+    <button onclick="setFacilityOverlay('buildingRouteImg','highlight', this)">명소</button>
   </div>
+  <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
+</div>
 
-  <div class="section" id="community">
-    <button class="back-btn" onclick="goHome()">← 이전</button>
-    <h2>커뮤니티</h2>
-    <div class="post-it-container" id="postContainer">
-      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰 😺</div>
-      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>야경 명소</strong><br/>북악관 엘리베이터 꼭대기에서 창밖을 보기 🌟</div>
-      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>잠시 잠을 자고 싶을 때</strong><br/>도서관 5층 빈백 / 도서관 B1 해동 빈백</div>
-    </div>
-    <button onclick="document.getElementById('writeForm').style.display='block'">작성하기</button>
-    <div class="post-form" id="writeForm" style="display:none; margin-top: 1rem;">
-      <input type="text" id="newTitle" placeholder="제목"/><br/>
-      <textarea id="newDesc" placeholder="글을 작성해주세요"></textarea><br/>
-      <input type="file"/><br/>
-      <button onclick="addPost()">등록</button>
-    </div>
+<div class="section" id="facilityInfo">
+  <button class="back-btn" onclick="goHome()">← 이전</button>
+  <div class="destination-label">도착지 선택</div>
+  <div class="destination-input">
+    <select style="width: 90%; max-width: 300px; padding: 0.5rem; border-radius: 8px;">
+      <option>학생식당</option><option>공연장</option><option>은행</option><option>편의점</option><option>플레이스앤</option>
+<option>101호</option><option>102호</option><option>103호</option><option>104호</option><option>105호</option><option>106호</option><option>107호</option><option>108호</option><option>109호</option><option>110호</option><option>111호</option><option>112호</option><option>113호</option><option>114호</option><option>115호</option><option>116호</option><option>117호</option><option>118호</option><option>119호</option><option>120호</option><option>121호</option><option>122호</option><option>123호</option><option>124호</option><option>125호</option><option>126호</option><option>201호</option><option>202호</option><option>203호</option><option>204호</option><option>205호</option><option>206호</option><option>207호</option><option>208호</option><option>209호</option><option>210호</option><option>211호</option><option>212호</option><option>213호</option><option>214호</option><option>215호</option><option>216호</option><option>217호</option><option>218호</option><option>219호</option><option>220호</option><option>221호</option><option>222호</option><option>223호</option><option>224호</option><option>225호</option><option>226호</option>
+    </select>
   </div>
-
-  <div class="section" id="login">
-    <button class="back-btn" onclick="goHome()">← 이전</button>
-    <h2>로그인</h2>
-    <input type="text" placeholder="아이디 입력" style="padding:0.5rem; width: 80%; max-width: 300px; margin: 0.5rem;"/>
-    <input type="password" placeholder="비밀번호 입력" style="padding:0.5rem; width: 80%; max-width: 300px;"/>
-    <br/><button class="zoom-btn">로그인</button>
+  <img id="facilityInfoImg" src="images/slide3.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;"/>
+  <div class="facility-tabs">
+    <button onclick="setFacilityOverlay('facilityInfoImg','route', this)">길찾기</button>
+    <button onclick="setFacilityOverlay('facilityInfoImg','density', this)">밀도 정보</button>
+    <button onclick="setFacilityOverlay('facilityInfoImg','status', this)">시설 현황</button>
+    <button onclick="setFacilityOverlay('facilityInfoImg','highlight', this)">명소</button>
   </div>
+  <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
+</div>
 
-  <script>
-    window.addEventListener("DOMContentLoaded", function () {
-      history.pushState(null, null, location.href);
-      window.addEventListener("popstate", function () {
-        goHome();
-      });
-    });
+<div class="section" id="community">
+  <button class="back-btn" onclick="goHome()">← 이전</button>
+  <div class="community-header">
+    <button class="active">커뮤니티</button>
+    <button onclick="showSection('customizing')">마이페이지</button>
+  </div>
+  <div class="sub-buttons">
+    <button>장소 공유</button>
+    <button>정보 공유</button>
+  </div>
+  <div class="post-it-container" id="postContainer">
+    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰 😺</div>
+    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>야경 명소</strong><br/>북악관 엘리베이터 꼭대기에서 창밖을 보기 🌟</div>
+    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>잠시 잠을 자고 싶을 때</strong><br/>도서관 5층 빈백 / 도서관 B1 해동 빈백</div>
+    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>숨겨진 벤치</strong><br/>용두리 위로 올라가면 나오는 성곡동산</div>
+    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>저렴한 자판기</strong><br/>북악관 3층 무인 커피자판기가 가장 저렴함</div>
+    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>시험기간 꿀팁</strong><br/>심야 버스 시간표 미리 확인 필수!</div>
+  </div>
+  <button onclick="document.getElementById('writeForm').style.display='block'">작성하기</button>
+  <div class="post-form" id="writeForm" style="display:none;">
+    <input type="text" id="newTitle" placeholder="제목"/><br/>
+    <textarea id="newDesc" placeholder="글을 작성해주세요"></textarea><br/>
+    <input type="file"/><br/>
+    <button onclick="addPost()">등록</button>
+  </div>
+</div>
 
-    function showSection(id) {
-      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-      document.querySelector('.home-interface').style.display = 'none';
-      const target = document.getElementById(id);
-      if (target) target.style.display = 'block';
-    }
+<div class="section" id="login">
+  <button class="back-btn" onclick="goHome()">← 이전</button>
+  <h2>로그인</h2>
+  <input placeholder="아이디 입력" style="padding:0.5rem; width: 80%; max-width: 300px; margin: 0.5rem;" type="text"/>
+  <input placeholder="비밀번호 입력" style="padding:0.5rem; width: 80%; max-width: 300px;" type="password"/>
+  <br/><button class="zoom-btn">로그인</button>
+</div>
 
-    function goHome() {
-      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-      document.querySelector('.home-interface').style.display = 'flex';
-    }
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.querySelector('.home-interface').style.display = 'none';
+  document.getElementById(id).style.display = 'block';
+}
+function goHome() {
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.querySelector('.home-interface').style.display = 'flex';
+}
+function setFacilityOverlay(imgId, type, btn) {
+  const map = {
+    density: "images/facility-density.png",
+    status: "images/facility-ui-2.png",
+    highlight: "images/facility-ui-3.png",
+    route: imgId === "buildingRouteImg" ? "images/slide2.JPG" : "images/slide3.JPG"
+  };
+  document.getElementById(imgId).src = map[type];
+  btn.parentElement.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+window.addEventListener("popstate", function () { goHome(); });
+history.pushState(null, null, location.href);
 
-    function addPost() {
-      const title = document.getElementById("newTitle").value;
-      const desc = document.getElementById("newDesc").value;
-      if (!title || !desc) return;
-      const container = document.getElementById("postContainer");
-      const post = document.createElement("div");
-      post.className = "post-it";
-      post.innerHTML = `<img class='profile' src='images/user-icon.png'/><strong>${title}</strong><br/>${desc}`;
-      container.prepend(post);
-      document.getElementById("newTitle").value = "";
-      document.getElementById("newDesc").value = "";
-      document.getElementById("writeForm").style.display = "none";
-    }
-  </script>
+function addPost() {
+  const title = document.getElementById("newTitle").value;
+  const desc = document.getElementById("newDesc").value;
+  if (!title || !desc) return;
+  const container = document.getElementById("postContainer");
+  const post = document.createElement("div");
+  post.className = "post-it";
+  post.innerHTML = `<img class='profile' src='images/user-icon.png'/><strong>${title}</strong><br/>${desc}`;
+  container.prepend(post);
+  document.getElementById("newTitle").value = "";
+  document.getElementById("newDesc").value = "";
+  document.getElementById("writeForm").style.display = "none";
+}
+
+</script>
 </body>
 </html>
