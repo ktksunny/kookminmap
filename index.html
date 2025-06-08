@@ -39,124 +39,122 @@
     .facility-tabs button.active {
       background: #3498db; color: white; font-weight: bold;
     }
-    .community-header {
-      display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;
-    }
-    .community-header button {
-      padding: 0.6rem 1.2rem; border-radius: 20px; border: none; background: #dbeeff; cursor: pointer;
-    }
-    .community-header .active { background: #3498db; color: white; font-weight: bold; }
-    .sub-buttons button {
-      background-color: #4169e1;
-      color: white;
-      padding: 0.5rem 1.5rem;
-      margin: 0.2rem;
-      border: none;
-      border-radius: 6px;
-    }
     .post-it-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem;
     }
     .post-it {
-      background: #fff88d;
-      width: 160px;
-      padding: 1.5rem 0.5rem 0.5rem 2.5rem;
-      border-radius: 6px;
-      text-align: left;
-      box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-      position: relative;
+      background: #fff88d; width: 160px; padding: 2.5rem 0.5rem 0.5rem; border-radius: 6px;
+      text-align: left; box-shadow: 2px 2px 4px rgba(0,0,0,0.1); position: relative;
     }
     .post-it img.profile {
-      top: 10px;
-      left: 10px;
-      position: absolute;
-      width: 30px;
-      border-radius: 50%;
-    }
-    .post-form {
-      margin-top: 2rem;
-    }
-    .post-form input, .post-form textarea {
-      width: 80%;
-      max-width: 400px;
-      padding: 1rem;
-      margin-top: 1rem;
-      background: #fff88d;
-      border: none;
-      border-radius: 6px;
-    }
-    .post-form input[type="file"] { background: none; }
-    .post-form button {
-      margin: 0.5rem;
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 6px;
-      background: #3498db;
-      color: white;
-      cursor: pointer;
+      position: absolute; top: 10px; left: 10px; width: 30px; border-radius: 50%;
     }
   </style>
 </head>
 <body>
-<div class="home-interface">
-  <img class="main-logo" src="images/kmap-logo.png"/>
-  <div class="icon-row">
-    <img onclick="showSection('login')" src="images/user-icon.png"/>
+  <div class="home-interface">
+    <img class="main-logo" src="images/kmap-logo.png"/>
+    <div class="icon-row">
+      <img onclick="showSection('login')" src="images/user-icon.png"/>
+    </div>
+    <div class="menu-vertical">
+      <button onclick="showSection('buildingMove')">건물 찾기</button>
+      <button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
+      <button onclick="showSection('event')">행사 / 시설 안내</button>
+      <button onclick="showSection('community')">커뮤니티</button>
+    </div>
   </div>
-  <div class="menu-vertical">
-    <button onclick="showSection('buildingMove')">건물 찾기</button>
-    <button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
-    <button onclick="showSection('eventInfo')">행사 / 시설 안내</button>
-    <button onclick="showSection('community')">커뮤니티</button>
-  </div>
-</div>
 
-<div class="section" id="eventInfo">
-  <button class="back-btn" onclick="goHome()">← 이전</button>
-  <h2>행사 / 시설 안내</h2>
-  <ul style="text-align:left; display:inline-block;">
-    <li>📌 6/20: 북악관 앞 잔디밭 플리마켓</li>
-    <li>🎤 6/22: 야외 특설무대 댄스 공연 (18시)</li>
-    <li>☕ 복지관 플레이스앤 리뉴얼 공사: 6/18 ~ 6/30</li>
-    <li>🕒 도서관 운영시간: 평일 08:30 ~ 22:00</li>
-  </ul>
-</div>
+  <div class="section" id="buildingMove">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>건물 찾기</h2>
+    <div class="destination-label">도착지 입력</div>
+    <div class="destination-input">
+      <input type="text" placeholder="예: 학생회관" style="width:100%; padding:0.5rem; border-radius:6px;"/>
+    </div>
+  </div>
 
-<div class="section" id="community">
-  <button class="back-btn" onclick="goHome()">← 이전</button>
-  <div class="community-header">
-    <button class="active">커뮤니티</button>
-    <button onclick="showSection('mypage')">마이페이지</button>
+  <div class="section" id="facilityInfo">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>강의실 / 시설 찾기</h2>
+    <div class="destination-label">항목 선택</div>
+    <div class="destination-input">
+      <select style="width:100%; padding:0.5rem; border-radius:6px;">
+        <option>학생식당</option><option>공연장</option><option>은행</option><option>편의점</option><option>플레이스앤</option>
+        <option>101호</option><option>102호</option><option>103호</option>
+      </select>
+    </div>
   </div>
-  <div class="sub-buttons">
-    <button>장소 공유</button>
-    <button>정보 공유</button>
-  </div>
-  <div class="post-it-container" id="postContainer">
-    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰 😺</div>
-    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>야경 명소</strong><br/>북악관 엘리베이터 꼭대기에서 창밖을 보기 🌟</div>
-    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>잠시 잠을 자고 싶을 때</strong><br/>도서관 5층 빈백 / 도서관 B1 해동 빈백</div>
-    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>숨겨진 벤치</strong><br/>용두리 위 성곡동산 벤치 최고</div>
-    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>저렴한 자판기</strong><br/>북악관 3층 무인 커피가 가장 싸요</div>
-    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>시험기간 꿀팁</strong><br/>심야 셔틀 시간표 미리 확인!</div>
-  </div>
-  <button onclick="document.getElementById('writeForm').style.display='block'">작성하기</button>
-  <div class="post-form" id="writeForm" style="display:none;">
-    <input type="text" id="newTitle" placeholder="제목"/><br/>
-    <textarea id="newDesc" placeholder="글을 작성해주세요"></textarea><br/>
-    <input type="file"/><br/>
-    <button onclick="addPost()">등록</button>
-  </div>
-</div>
 
-<div class="section" id="mypage">
-  <button class="back-btn" onclick="showSection('community')">← 이전</button>
-  <h2>캐릭터 커스터마이징</h2>
-  <img src="images/customizing-mascot.png" style="width:90%; max-width: 400px; border-radius:10px;" />
-</div>
+  <div class="section" id="event">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>행사 / 시설 안내</h2>
+    <ul style="text-align:left; display:inline-block;">
+      <li>📌 6/15: 대운동장 플리마켓 운영 (10:00~17:00)</li>
+      <li>🎤 6/20: 예술관 야외무대 힙합 공연 (18:00~20:00)</li>
+      <li>🚰 북악관 4층 남자화장실 리모델링 공사 진행 중</li>
+      <li>🕒 편의점 운영 시간: 08:00 ~ 21:00 (일요일 휴무)</li>
+    </ul>
+  </div>
 
-<!-- 기존 login 등 기타 섹션과 스크립트는 사용자 요청에 따라 그대로 유지됨 -->
+  <div class="section" id="community">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>커뮤니티</h2>
+    <div class="post-it-container" id="postContainer">
+      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰 😺</div>
+      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>야경 명소</strong><br/>북악관 엘리베이터 꼭대기에서 창밖을 보기 🌟</div>
+      <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>잠시 잠을 자고 싶을 때</strong><br/>도서관 5층 빈백 / 도서관 B1 해동 빈백</div>
+    </div>
+    <button onclick="document.getElementById('writeForm').style.display='block'">작성하기</button>
+    <div class="post-form" id="writeForm" style="display:none; margin-top: 1rem;">
+      <input type="text" id="newTitle" placeholder="제목"/><br/>
+      <textarea id="newDesc" placeholder="글을 작성해주세요"></textarea><br/>
+      <input type="file"/><br/>
+      <button onclick="addPost()">등록</button>
+    </div>
+  </div>
+
+  <div class="section" id="login">
+    <button class="back-btn" onclick="goHome()">← 이전</button>
+    <h2>로그인</h2>
+    <input type="text" placeholder="아이디 입력" style="padding:0.5rem; width: 80%; max-width: 300px; margin: 0.5rem;"/>
+    <input type="password" placeholder="비밀번호 입력" style="padding:0.5rem; width: 80%; max-width: 300px;"/>
+    <br/><button class="zoom-btn">로그인</button>
+  </div>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      history.pushState(null, null, location.href);
+      window.addEventListener("popstate", function () {
+        goHome();
+      });
+    });
+
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+      document.querySelector('.home-interface').style.display = 'none';
+      const target = document.getElementById(id);
+      if (target) target.style.display = 'block';
+    }
+
+    function goHome() {
+      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+      document.querySelector('.home-interface').style.display = 'flex';
+    }
+
+    function addPost() {
+      const title = document.getElementById("newTitle").value;
+      const desc = document.getElementById("newDesc").value;
+      if (!title || !desc) return;
+      const container = document.getElementById("postContainer");
+      const post = document.createElement("div");
+      post.className = "post-it";
+      post.innerHTML = `<img class='profile' src='images/user-icon.png'/><strong>${title}</strong><br/>${desc}`;
+      container.prepend(post);
+      document.getElementById("newTitle").value = "";
+      document.getElementById("newDesc").value = "";
+      document.getElementById("writeForm").style.display = "none";
+    }
+  </script>
+</body>
+</html>
