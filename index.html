@@ -2,51 +2,85 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>국민대 로컬맵 서비스</title>
-<style>
-  body { font-family: sans-serif; background: #f0f4f8; margin: 0; text-align: center; }
-  .home-interface { display: flex; flex-direction: column; align-items: center; margin-top: 3rem; }
-  .main-logo { width: 100px; margin-bottom: 2rem; }
-  .icon-row { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
-  .icon-row img { width: 60px; }
-  .menu-vertical button {
-    display: block; width: 200px; margin: 0.5rem 0; padding: 1rem;
-    font-size: 1rem; border: none; background: black; color: white; border-radius: 6px; cursor: pointer;
-  }
-  .section { display: none; margin-top: 2rem; text-align: center; }
-  .back-btn {
-    position: absolute; top: 10px; left: 10px;
-    background: #fff; border: 1px solid #aaa;
-    padding: 0.4rem 1rem; border-radius: 20px; cursor: pointer;
-  }
-  .destination-label { font-weight: bold; margin-top: 1rem; font-size: 1.1rem; }
-  .destination-input {
-    margin-top: 0.5rem; width: 80%; max-width: 300px;
-    background: white; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 0.5rem 1rem;
-  }
-  .zoom-btn {
-    margin-top: 1rem; padding: 0.6rem 1.2rem;
-    background: #333; color: white; border: none; border-radius: 8px; cursor: pointer;
-  }
-  .facility-tabs {
-    display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;
-  }
-  .facility-tabs button {
-    padding: 0.5rem 1rem; border-radius: 20px; border: none; background: #ddd; cursor: pointer;
-  }
-  .facility-tabs button.active {
-    background: #3498db; color: white; font-weight: bold;
-  }
-</style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>국민대 로컬맵 서비스</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f4f8; margin: 0; text-align: center; }
+    .home-interface { display: flex; flex-direction: column; align-items: center; margin-top: 3rem; }
+    .main-logo { width: 100px; margin-bottom: 2rem; }
+    .icon-row { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+    .icon-row img { width: 60px; cursor: pointer; }
+    .menu-vertical button {
+      display: block; width: 200px; margin: 0.5rem 0; padding: 1rem;
+      font-size: 1rem; border: none; background: black; color: white; border-radius: 6px; cursor: pointer;
+    }
+    .section { display: none; margin-top: 2rem; text-align: center; }
+    .back-btn {
+      position: absolute; top: 10px; left: 10px;
+      background: #fff; border: 1px solid #aaa;
+      padding: 0.4rem 1rem; border-radius: 20px; cursor: pointer;
+    }
+    .destination-label { font-weight: bold; margin-top: 1rem; font-size: 1.1rem; }
+    .destination-input {
+      margin-top: 0.5rem; width: 80%; max-width: 300px;
+      background: white; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 0.5rem 1rem;
+    }
+    .zoom-btn {
+      margin-top: 1rem; padding: 0.6rem 1.2rem;
+      background: #333; color: white; border: none; border-radius: 8px; cursor: pointer;
+    }
+    .facility-tabs {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;
+    }
+    .facility-tabs button {
+      padding: 0.5rem 1rem; border-radius: 20px; border: none; background: #ddd; cursor: pointer;
+    }
+    .facility-tabs button.active {
+      background: #3498db; color: white; font-weight: bold;
+    }
+
+    /* 커뮤니티 관련 추가 */
+    .community-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .post-it {
+      background: #fff88d;
+      width: 160px;
+      height: auto;
+      border-radius: 6px;
+      padding: 2.5rem 0.5rem 0.5rem 0.5rem;
+      text-align: left;
+      box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .post-it img.profile {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 30px;
+      border-radius: 50%;
+    }
+    .community-write textarea, .community-write input[type='text'] {
+      width: 80%; max-width: 400px; padding: 1rem; margin-top: 1rem;
+      background: #fff88d; border: none; border-radius: 6px;
+    }
+    .community-write button {
+      margin: 0.5rem; padding: 0.6rem 1.2rem; border: none; border-radius: 6px;
+      background: #3498db; color: white; cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 <div class="home-interface">
   <img class="main-logo" src="images/kmap-logo.png"/>
   <div class="icon-row">
-    <img onclick="showSection('login')" src="images/user-icon.png" style="cursor:pointer;"/>
+    <img onclick="showSection('login')" src="images/user-icon.png"/>
   </div>
   <div class="menu-vertical">
     <button onclick="showSection('buildingMove')">건물 찾기</button>
@@ -63,10 +97,10 @@
   </div>
   <img id="buildingRouteImg" src="images/slide2.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;"/>
   <div class="facility-tabs">
-    <button onclick="setFacilityOverlay('buildingRouteImg','density')" id="bd-d">밀도 정보</button>
-    <button onclick="setFacilityOverlay('buildingRouteImg','status')" id="bd-s">시설 현황</button>
-    <button onclick="setFacilityOverlay('buildingRouteImg','highlight')" id="bd-h">명소</button>
-    <button onclick="setFacilityOverlay('buildingRouteImg','route')">길찾기</button>
+    <button onclick="setFacilityOverlay('buildingRouteImg','route', this)">길찾기</button>
+    <button onclick="setFacilityOverlay('buildingRouteImg','density', this)">밀도 정보</button>
+    <button onclick="setFacilityOverlay('buildingRouteImg','status', this)">시설 현황</button>
+    <button onclick="setFacilityOverlay('buildingRouteImg','highlight', this)">명소</button>
   </div>
   <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
 </div>
@@ -82,12 +116,24 @@
   </div>
   <img id="facilityInfoImg" src="images/slide3.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;"/>
   <div class="facility-tabs">
-    <button onclick="setFacilityOverlay('facilityInfoImg','density')" id="fi-d">밀도 정보</button>
-    <button onclick="setFacilityOverlay('facilityInfoImg','status')" id="fi-s">시설 현황</button>
-    <button onclick="setFacilityOverlay('facilityInfoImg','highlight')" id="fi-h">명소</button>
-    <button onclick="setFacilityOverlay('facilityInfoImg','route')">길찾기</button>
+    <button onclick="setFacilityOverlay('facilityInfoImg','route', this)">길찾기</button>
+    <button onclick="setFacilityOverlay('facilityInfoImg','density', this)">밀도 정보</button>
+    <button onclick="setFacilityOverlay('facilityInfoImg','status', this)">시설 현황</button>
+    <button onclick="setFacilityOverlay('facilityInfoImg','highlight', this)">명소</button>
   </div>
   <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
+</div>
+
+<div class="section" id="community">
+  <button class="back-btn" onclick="goHome()">← 이전</button>
+  <div class="community-cards" id="communityCards">
+    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰 😺</div>
+    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>야경 명소</strong><br/>북악관 엘리베이터 꼭대기에서 창밖을 보기 🌟</div>
+    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>잠시 잠을 자고 싶을 때</strong><br/>도서관 5층 빈백 / 도서관 B1 해동 빈백</div>
+    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>숨겨진 벤치</strong><br/>용두리 위로 올라가면 나오는 성곡동산</div>
+    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>저렴한 자판기</strong><br/>북악관 3층 무인 커피자판기가 가장 저렴함</div>
+    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>시험기간 꿀팁</strong><br/>심야 버스 시간표 미리 확인 필수!</div>
+  </div>
 </div>
 
 <div class="section" id="login">
@@ -108,7 +154,7 @@ function goHome() {
   document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
   document.querySelector('.home-interface').style.display = 'flex';
 }
-function setFacilityOverlay(imgId, type) {
+function setFacilityOverlay(imgId, type, btn) {
   const map = {
     density: "images/facility-density.png",
     status: "images/facility-ui-2.png",
@@ -116,6 +162,8 @@ function setFacilityOverlay(imgId, type) {
     route: imgId === "buildingRouteImg" ? "images/slide2.JPG" : "images/slide3.JPG"
   };
   document.getElementById(imgId).src = map[type];
+  btn.parentElement.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
 }
 window.addEventListener("popstate", function () { goHome(); });
 history.pushState(null, null, location.href);
