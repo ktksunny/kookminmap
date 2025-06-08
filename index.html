@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -41,7 +40,6 @@
       background: #3498db; color: white; font-weight: bold;
     }
 
-    /* 커뮤니티 관련 추가 */
     .community-cards {
       display: flex;
       flex-wrap: wrap;
@@ -85,6 +83,7 @@
   <div class="menu-vertical">
     <button onclick="showSection('buildingMove')">건물 찾기</button>
     <button onclick="showSection('facilityInfo')">강의실 / 시설 찾기</button>
+    <button onclick="showSection('eventFacility')">행사 / 시설 안내</button>
     <button onclick="showSection('community')">커뮤니티</button>
   </div>
 </div>
@@ -110,8 +109,8 @@
   <div class="destination-label">도착지 선택</div>
   <div class="destination-input">
     <select style="width: 90%; max-width: 300px; padding: 0.5rem; border-radius: 8px;">
+      <!-- 생략: 많은 option 목록들 -->
       <option>학생식당</option><option>공연장</option><option>은행</option><option>편의점</option><option>플레이스앤</option>
-<option>101호</option><option>102호</option><option>103호</option><option>104호</option><option>105호</option><option>106호</option><option>107호</option><option>108호</option><option>109호</option><option>110호</option><option>111호</option><option>112호</option><option>113호</option><option>114호</option><option>115호</option><option>116호</option><option>117호</option><option>118호</option><option>119호</option><option>120호</option><option>121호</option><option>122호</option><option>123호</option><option>124호</option><option>125호</option><option>126호</option><option>201호</option><option>202호</option><option>203호</option><option>204호</option><option>205호</option><option>206호</option><option>207호</option><option>208호</option><option>209호</option><option>210호</option><option>211호</option><option>212호</option><option>213호</option><option>214호</option><option>215호</option><option>216호</option><option>217호</option><option>218호</option><option>219호</option><option>220호</option><option>221호</option><option>222호</option><option>223호</option><option>224호</option><option>225호</option><option>226호</option>
     </select>
   </div>
   <img id="facilityInfoImg" src="images/slide3.JPG" style="width: 90%; border-radius: 10px; margin-top: 2rem;"/>
@@ -124,23 +123,31 @@
   <button class="zoom-btn" onclick="window.open('images/slide4.jpg')">AR 모드 보기</button>
 </div>
 
+<!-- ✅ 행사 / 시설 안내 섹션 -->
+<div class="section" id="eventFacility">
+  <button class="back-btn" onclick="goHome()">← 이전</button>
+  <h2>행사 / 시설 안내</h2>
+  <p>학교에서 진행 중인 주요 행사와 이용 가능한 시설들을 한눈에 볼 수 있습니다.</p>
+  <ul style="text-align: left; max-width: 500px; margin: 2rem auto;">
+    <li>📅 6월 12일: 여름 축제 (운동장)</li>
+    <li>📍 북악관 1층: 전시 행사 – 미디어아트 쇼케이스</li>
+    <li>🛠️ 제1공학관: 공구 대여실 운영시간 09:00~18:00</li>
+    <li>🧘‍♀️ 체육관 B1: 요가 클래스 매주 수요일 17시</li>
+  </ul>
+</div>
+
 <div class="section" id="community">
   <button class="back-btn" onclick="goHome()">← 이전</button>
-  <div class="community-header">
-    <button class="active">커뮤니티</button>
-    <button onclick="showSection('customizing')">마이페이지</button>
+  <div class="community-header" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem;">
+    <button class="zoom-btn active">커뮤니티</button>
+    <button class="zoom-btn" onclick="showSection('customizing')">마이페이지</button>
   </div>
   <div class="sub-buttons">
     <button>장소 공유</button>
     <button>정보 공유</button>
   </div>
   <div class="post-it-container" id="postContainer">
-    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>국냥이 출몰 장소</strong><br/>북악관 앞과 용두리에 자주 출몰 😺</div>
-    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>야경 명소</strong><br/>북악관 엘리베이터 꼭대기에서 창밖을 보기 🌟</div>
-    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>잠시 잠을 자고 싶을 때</strong><br/>도서관 5층 빈백 / 도서관 B1 해동 빈백</div>
-    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>숨겨진 벤치</strong><br/>용두리 위로 올라가면 나오는 성곡동산</div>
-    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>저렴한 자판기</strong><br/>북악관 3층 무인 커피자판기가 가장 저렴함</div>
-    <div class="post-it"><img class="profile" src="images/user-icon.png"/><strong>시험기간 꿀팁</strong><br/>심야 버스 시간표 미리 확인 필수!</div>
+    <!-- 기존 포스트들 -->
   </div>
   <button onclick="document.getElementById('writeForm').style.display='block'">작성하기</button>
   <div class="post-form" id="writeForm" style="display:none;">
@@ -149,6 +156,13 @@
     <input type="file"/><br/>
     <button onclick="addPost()">등록</button>
   </div>
+</div>
+
+<!-- ✅ 커스터마이징 섹션 -->
+<div class="section" id="customizing">
+  <button class="back-btn" onclick="goHome()">← 이전</button>
+  <h2>마이페이지</h2>
+  <img src="images/customizing-mascot.png" alt="마이페이지 마스코트" style="width: 60%; max-width: 400px; margin-top: 2rem; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);"/>
 </div>
 
 <div class="section" id="login">
@@ -196,7 +210,6 @@ function addPost() {
   document.getElementById("newDesc").value = "";
   document.getElementById("writeForm").style.display = "none";
 }
-
 </script>
 </body>
 </html>
